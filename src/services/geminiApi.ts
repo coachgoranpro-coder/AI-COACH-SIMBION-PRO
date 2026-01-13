@@ -9,7 +9,7 @@ interface GeminiMessage {
 }
 
 // Initialize Gemini with API key
-const GEMINI_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || "";
+const GEMINI_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || "AIzaSyAhfra9XRpi8Y2uSmOgqqejHkXwAnurpfw";
 let genAI: GoogleGenerativeAI | null = null;
 
 if (GEMINI_API_KEY) {
