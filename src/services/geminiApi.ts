@@ -1,5 +1,5 @@
 // Google Gemini API Service for AI Coach SIMBION Pro
-// Using Gemini 2.5 Flash - FREE tier with 1500 requests/day
+// Using Gemini 1.5 Flash - FREE tier with 1500 requests/day
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -34,7 +34,7 @@ export async function callGeminiAPI(
       return getFallbackResponse(language);
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // Build conversation context
     const chat = model.startChat({
