@@ -1,0 +1,6 @@
+  // BYPASS: Auto-login without Firebase
+  useEffect(() => {
+    setCurrentUser({ uid: 'demo-user', email: 'demo@simbion.pro' } as User);
+    setSubscription({ status: 'active', expiresAt: new Date(Date.now() + 365*24*60*60*1000) });
+    setLoading(false);
+  }, []);

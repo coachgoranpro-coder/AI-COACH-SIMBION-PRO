@@ -1,0 +1,150 @@
+/**
+ * SIMBION PRO - KATALOG VEŽBI ZA KOŠARKU
+ * JEDNOSTAVAN FORMAT - samo osnovne vežbe za rad workout templates
+ */
+
+export type ExerciseLevel = 'beginner' | 'intermediate' | 'advanced' | 'elite';
+export type ExerciseCategory = 
+  | 'proprioception'
+  | 'speed'
+  | 'power'
+  | 'strength'
+  | 'endurance'
+  | 'agility'
+  | 'core'
+  | 'recovery';
+
+export type BasketballPosition = 'PG' | 'SG' | 'SF' | 'PF' | 'C';
+
+export interface Exercise {
+  id: string;
+  name: {
+    sr: string;
+    en: string;
+  };
+  category: ExerciseCategory;
+  level: ExerciseLevel;
+  basketballSpecific: boolean;
+}
+
+// Minimum katalog za workout templates
+export const allExercises: Exercise[] = [
+  {
+    id: 'wrist-flexion-extension',
+    name: { sr: 'Fleksije i ekstenzije šaka', en: 'Wrist Flexion and Extension' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'ankle-dorsiflexion-plantarflexion',
+    name: { sr: 'Dorzifleksija i plantarfleksija stopala', en: 'Ankle Dorsiflexion and Plantarflexion' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'hip-mobility-active',
+    name: { sr: 'Aktivna mobilnost kukova', en: 'Active Hip Mobility' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'single-leg-balance-basic',
+    name: { sr: 'Balans na jednoj nozi - osnovno', en: 'Single Leg Balance - Basic' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'gluteus-activation-single-leg-rdl',
+    name: { sr: 'Aktivacija gluteusa - Single Leg RDL', en: 'Glute Activation - Single Leg RDL' },
+    category: 'strength',
+    level: 'intermediate',
+    basketballSpecific: true
+  },
+  {
+    id: 'gluteus-activation-hip-thrust',
+    name: { sr: 'Aktivacija gluteusa - Hip Thrust', en: 'Glute Activation - Hip Thrust' },
+    category: 'strength',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'mountain-climber-activation',
+    name: { sr: 'Mountain Climber - Aktivacija', en: 'Mountain Climber - Activation' },
+    category: 'speed',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'tibialis-anterior-activation',
+    name: { sr: 'Aktivacija tibialis anterior', en: 'Tibialis Anterior Activation' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'quadriceps-hamstring-activation-plyometric',
+    name: { sr: 'Aktivacija kvadricepsa i hamstringa - Pliometrija', en: 'Quadriceps and Hamstring Activation - Plyometric' },
+    category: 'power',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'carioca-lateral-coordination',
+    name: { sr: 'Karioka za lateralnu koordinaciju', en: 'Carioca for Lateral Coordination' },
+    category: 'proprioception',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'custom-light-jog-recovery',
+    name: { sr: 'Lagano trčanje - oporavak', en: 'Light Jog - Recovery' },
+    category: 'recovery',
+    level: 'beginner',
+    basketballSpecific: false
+  },
+  {
+    id: 'custom-breathing-exercises',
+    name: { sr: 'Vežbe disanja', en: 'Breathing Exercises' },
+    category: 'recovery',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'custom-static-stretching',
+    name: { sr: 'Statičko istezanje', en: 'Static Stretching' },
+    category: 'recovery',
+    level: 'beginner',
+    basketballSpecific: false
+  },
+  {
+    id: 'custom-hip-flexor-stretch',
+    name: { sr: 'Istezanje hip flexora', en: 'Hip Flexor Stretch' },
+    category: 'recovery',
+    level: 'beginner',
+    basketballSpecific: true
+  },
+  {
+    id: 'custom-hamstring-stretch',
+    name: { sr: 'Istezanje hamstrings', en: 'Hamstring Stretch' },
+    category: 'recovery',
+    level: 'beginner',
+    basketballSpecific: true
+  }
+];
+
+// Helper funkcije
+export function getExerciseById(id: string): Exercise | undefined {
+  return allExercises.find(e => e.id === id);
+}
+
+export function getExercisesByLevel(level: ExerciseLevel): Exercise[] {
+  return allExercises.filter(e => e.level === level);
+}
+
+export function getExercisesByCategory(category: ExerciseCategory): Exercise[] {
+  return allExercises.filter(e => e.category === category);
+}

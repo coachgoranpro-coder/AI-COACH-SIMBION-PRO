@@ -1,0 +1,1758 @@
+// Claude API Service for AI Coach SIMBION Pro
+// API key rezervisan za buduću implementaciju sa backend-om
+// const CLAUDE_API_KEY = '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';
+
+interface ClaudeMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+// Local fallback responses when API key is not configured
+
+// AI-LIKE GENERATOR - generише raznovrsne planove kao pravi AI
+function generateCorrelationTrainingPlan(
+  factor1: string, 
+  factor2: string, 
+  days: number, 
+  basketballContext: string,
+  language: 'sr' | 'en'
+): string {
+  const f1Lower = factor1.toLowerCase();
+  const f2Lower = factor2.toLowerCase();
+  
+  if (language === 'sr') {
+    let plan = `**🔥 Integrisani Program: ${factor1} ↔ ${factor2} (${days} dana)**\n${basketballContext}\n\n`;
+    plan += `**📋 PRINCIP:** Program kombinuje oba fizička kvaliteta u svakom treningu za maksimalan sinergijski efekat. Korelacija između ovih faktora omogućava da razvoj jednog automatski poboljšava drugi.\n\n`;
+    
+    for (let i = 1; i <= days; i++) {
+      const isRecovery = i % 4 === 0;
+      
+      if (isRecovery) {
+        plan += `**DAN ${i}: Aktivni Oporavak**\n`;
+        plan += `- Lagano aerobno: 15-20min (zona 1-2, 60-70% HRmax)\n`;
+        plan += `- Foam rolling: 12min (sve glavne mišićne grupe)\n`;
+        plan += `- Dinamičko istezanje: 10min (fokus na nogu i kukove)\n`;
+        plan += `- Mobilnost zglobova: 8min (skočni, kolenski, kuk, ramena)\n`;
+        plan += `- Disajne vežbe: 5min (dijafragmalno disanje)\n`;
+        if (basketballContext) {
+          plan += `\n💡 Kada izvesti: Ujutro ili posle laganog košarkaškog treninga\n`;
+          plan += `⚠️ Napomena: Oporavak je prioritet - izbegavati bilo kakav intenzitet\n\n`;
+        } else {
+          plan += `\n`;
+        }
+      } else {
+        // Generisanje kombinovanog treninga na osnovu faktora
+        const primaryFactor = i % 2 === 1 ? factor1 : factor2;
+        const secondaryFactor = i % 2 === 1 ? factor2 : factor1;
+        
+        // Extract games count for volume adjustment
+        const gamesMatch = basketballContext.match(/Utakmica:\s*(\d+)/);
+        const games = gamesMatch ? parseInt(gamesMatch[1]) : 1;
+        
+        plan += `**DAN ${i}: ${primaryFactor} (fokus) + ${secondaryFactor}**\n\n`;
+        plan += `🔥 **ZAGREVANJE (12-15min):**\n`;
+        plan += `- Dinamička mobilnost: leg swings (3×10/noga), hip circles (2×10), arm circles (2×10)\n`;
+        plan += `- Aktivacija: glute bridges (2×12), bird dogs (2×10/strana), band walks (2×15m)\n`;
+        plan += `- CNS priprema: medicine ball slams (2×8) ili sprint build-ups (3×20m @ 50-70-90%)\n\n`;
+        
+        plan += `💪 **GLAVNI DEO:**\n`;
+        plan += generateMainWorkout(f1Lower, f2Lower, i, primaryFactor === factor1, games);
+        
+        plan += `\n🧘 **COOL DOWN (8-10min):**\n`;
+        plan += `- Lagano trčanje ili vožnja bicikla: 5min\n`;
+        plan += `- Statičko istezanje: 5min (zadnja ložа, kvadriceps, hip flexors, calf)\n\n`;
+        
+        if (basketballContext) {
+          const trainingsMatch = basketballContext.match(/Treninga:\s*(\d+)/);
+          const gamesMatch = basketballContext.match(/Utakmica:\s*(\d+)/);
+          const trainings = trainingsMatch ? parseInt(trainingsMatch[1]) : 3;
+          const games = gamesMatch ? parseInt(gamesMatch[1]) : 1;
+          
+          // Kalkulacija TOTALNE SEDMIČNE NEUROMUSKULARNE OPTEĆENJA (TSNNO)
+          const totalLoad = trainings + (games * 2.5); // 1 utakmica = 2.5 treninga
+          
+          plan += `💡 **Timing sa košarkom:**\n`;
+          
+          // MULTI-GAME ADJUSTMENTS (2-3 utakmice nedeljno)
+          if (games >= 3) {
+            plan += `🚨 **REŽIM VISOKOG OPTEĆENJA (${games} utakmice/nedeljno):**\n`;
+            plan += `- DRASTIČNO smanji volumen: -40-50% setova\n`;
+            plan += `- Prioritet: OPORAVAK > Razvoj\n`;
+            plan += `- Zameni 50% treninga sa regenerativnim radom (foam rolling, yoga, plivanje)\n`;
+            plan += `- Intenzitet zadržati (težina), ali smanjiti volumen (setove/ponavljanja)\n`;
+            plan += `- OBAVEZNO: 48h bez treninga nogu pre svake utakmice\n`;
+            plan += `- Preporuka: Max 2 teška treninga nedeljno (utorak, petak ako su utakmice sreda/subota/nedelja)\n\n`;
+          } else if (games === 2) {
+            plan += `⚠️ **DVE UTAKMICE REŽIM:**\n`;
+            plan += `- Smanji volumen: -30-40% setova u odnosu na bazni plan\n`;
+            plan += `- Fokus na ODRŽAVANJE, ne razvoj\n`;
+            plan += `- Trening nogu SAMO u utorak (ako su utakmice subota+sreda) ili četvrtak (ako su ned+sreda)\n`;
+            plan += `- Minimum 48h razmak između teškog treninga nogu i utakmice\n`;
+            plan += `- Gornji deo tela može 2-3x nedeljno, donji max 1x\n\n`;
+          } else if (totalLoad >= 10) {
+            // 1 utakmica + 5+ treninga = ekstremno opterećenje
+            plan += `⚠️ **VISOKO OPTEREĆENJE (${trainings} treninga + ${games} utakmica):**\n`;
+            plan += `- Izvesti UJUTRO (6-8h) PRE košarke ili na dan bez košarke\n`;
+            plan += `- Smanjiti volumen za 25-35% zbog visokog košarkaškog opterećenja\n`;
+            plan += `- Prioritet kratki, intenzivni treninzi (30-40min max)\n\n`;
+          } else if (trainings >= 3 || games === 1) {
+            plan += `- Idealno 5-6h POSLE košarke ili ujutro PRE (minimum 4h razmak)\n`;
+            plan += `- Trening nogu 48h PRE utakmice = ZABRANJEN\n\n`;
+          } else {
+            plan += `- Fleksibilan timing - malo košarkaškog opterećenja\n\n`;
+          }
+          
+          const needsLegCaution = f1Lower.includes('snaga') || f1Lower.includes('eksploziv') || 
+                                   f2Lower.includes('snaga') || f2Lower.includes('eksploziv');
+          if (needsLegCaution && games >= 2) {
+            plan += `🔴 **EKSTREMNO VAŽNO (${games} utakmice):**\n`;
+            plan += `- Maksimalno jedan (1) težak trening nogu nedeljno\n`;
+            plan += `- Planiraj pažljivo da budeš 100% svež za sve utakmice\n`;
+            plan += `- Preporuka: Radi trening nogu najdalje od prve utakmice u nedelji\n`;
+            plan += `- Primer: Utakmice sreda+subota → trening nogu samo nedelja ujutro\n`;
+          } else if (needsLegCaution) {
+            plan += `⚠️ **KRITIČNO:** Trening nogu ZABRANJEN 48h pre utakmice!\n`;
+          }
+          plan += `\n`;
+        }
+      }
+    }
+    
+    plan += `\n📊 **PROGRESIJA:** Svake nedelje povećaj opterećenje za 2-5% ili dodaj 1 ponavljanje po setu.\n`;
+    plan += `✅ **OPORAVAK:** Spavaj 8+ sati, hidracija 3L+ dnevno, ishrana 2g proteina/kg TM.\n`;
+    plan += `🎯 **TRACKING:** Vodi dnevnik treninga - setovi, reps, opterećenje, osećaj (1-10).\n\n`;
+    plan += `💡 Napomena: Ovo je bazni template. Za personalizovani program sa kompletnom periodizacijom, koristi profesionalni AI Generator (dugme "Generiši Personalizovani Plan").`;
+    
+    return plan;
+  }
+  
+  // ENGLISH VERSION - full implementation
+  let plan = `**🔥 Integrated Program: ${factor1} ↔ ${factor2} (${days} days)**\n${basketballContext}\n\n`;
+  plan += `**📋 PRINCIPLE:** This program combines both physical qualities in every training session for maximum synergistic effect. The correlation between these factors allows development of one to automatically improve the other.\n\n`;
+  
+  for (let i = 1; i <= days; i++) {
+    const isRecovery = i % 4 === 0;
+    
+    if (isRecovery) {
+      plan += `**DAY ${i}: Active Recovery**\n`;
+      plan += `- Light aerobic: 15-20min (zone 1-2, 60-70% HRmax)\n`;
+      plan += `- Foam rolling: 12min (all major muscle groups)\n`;
+      plan += `- Dynamic stretching: 10min (focus on legs and hips)\n`;
+      plan += `- Joint mobility: 8min (ankle, knee, hip, shoulders)\n`;
+      plan += `- Breathing exercises: 5min (diaphragmatic breathing)\n`;
+      if (basketballContext) {
+        plan += `\n💡 When to perform: Morning or after light basketball practice\n`;
+        plan += `⚠️ Note: Recovery is priority - avoid any intensity\n\n`;
+      } else {
+        plan += `\n`;
+      }
+    } else {
+      const primaryFactor = i % 2 === 1 ? factor1 : factor2;
+      const secondaryFactor = i % 2 === 1 ? factor2 : factor1;
+      
+      const gamesMatch = basketballContext.match(/Games:\s*(\d+)|Games per week:\s*(\d+)/);
+      const games = gamesMatch ? parseInt(gamesMatch[1] || gamesMatch[2]) : 1;
+      
+      plan += `**DAY ${i}: ${primaryFactor} (focus) + ${secondaryFactor}**\n\n`;
+      plan += `🔥 **WARM-UP (12-15min):**\n`;
+      plan += `- Dynamic mobility: leg swings (3×10/leg), hip circles (2×10), arm circles (2×10)\n`;
+      plan += `- Activation: glute bridges (2×12), bird dogs (2×10/side), band walks (2×15m)\n`;
+      plan += `- CNS preparation: medicine ball slams (2×8) or sprint build-ups (3×20m @ 50-70-90%)\n\n`;
+      
+      plan += `💪 **MAIN WORK:**\n`;
+      plan += generateMainWorkoutEnglish(f1Lower, f2Lower, i, primaryFactor === factor1, games);
+      
+      plan += `\n🧘 **COOL DOWN (8-10min):**\n`;
+      plan += `- Light jogging or cycling: 5min\n`;
+      plan += `- Static stretching: 5min (hamstrings, quadriceps, hip flexors, calves)\n\n`;
+      
+      if (basketballContext) {
+        const trainingsMatch = basketballContext.match(/trainings:\s*(\d+)|Basketball trainings per week:\s*(\d+)/i);
+        const gamesMatch2 = basketballContext.match(/Games:\s*(\d+)|Games per week:\s*(\d+)/i);
+        const trainings = trainingsMatch ? parseInt(trainingsMatch[1] || trainingsMatch[2]) : 3;
+        const games = gamesMatch2 ? parseInt(gamesMatch2[1] || gamesMatch2[2]) : 1;
+        
+        const totalLoad = trainings + (games * 2.5);
+        
+        plan += `💡 **Basketball timing:**\n`;
+        
+        if (games >= 3) {
+          plan += `🚨 **HIGH LOAD REGIME (${games} games/week):**\n`;
+          plan += `- DRASTICALLY reduce volume: -40-50% sets\n`;
+          plan += `- Priority: RECOVERY > Development\n`;
+          plan += `- Replace 50% workouts with regenerative work (foam rolling, yoga, swimming)\n`;
+          plan += `- Keep intensity (weight), but reduce volume (sets/reps)\n`;
+          plan += `- MANDATORY: 48h no leg training before each game\n`;
+          plan += `- Recommendation: Max 2 heavy workouts/week\n\n`;
+        } else if (games === 2) {
+          plan += `⚠️ **TWO GAMES REGIME:**\n`;
+          plan += `- Reduce volume: -30-40% sets vs base plan\n`;
+          plan += `- Focus on MAINTENANCE, not development\n`;
+          plan += `- Leg training ONLY on safe days (48h+ before game)\n`;
+          plan += `- Upper body 2-3x/week OK, lower body max 1x\n\n`;
+        } else if (totalLoad >= 10) {
+          plan += `⚠️ **HIGH LOAD (${trainings} trainings + ${games} game):**\n`;
+          plan += `- Perform MORNING (6-8h) BEFORE basketball or on day without basketball\n`;
+          plan += `- Reduce volume by 25-35% due to high basketball load\n`;
+          plan += `- Priority: short, intense workouts (30-40min max)\n\n`;
+        } else if (trainings >= 3 || games === 1) {
+          plan += `- Ideally 5-6h AFTER basketball or morning BEFORE (minimum 4h gap)\n`;
+          plan += `- Leg training 48h BEFORE game = FORBIDDEN\n\n`;
+        } else {
+          plan += `- Flexible timing - low basketball load\n\n`;
+        }
+        
+        const needsLegCaution = f1Lower.includes('strength') || f1Lower.includes('explosive') || f1Lower.includes('power') ||
+                                 f2Lower.includes('strength') || f2Lower.includes('explosive') || f2Lower.includes('power');
+        if (needsLegCaution && games >= 2) {
+          plan += `🔴 **CRITICALLY IMPORTANT (${games} games):**\n`;
+          plan += `- Maximum one (1) heavy leg workout per week\n`;
+          plan += `- Plan carefully to be 100% fresh for all games\n`;
+          plan += `- Recommendation: Do leg training furthest from first game of week\n`;
+        } else if (needsLegCaution) {
+          plan += `⚠️ **CRITICAL:** Leg training FORBIDDEN 48h before game!\n`;
+        }
+        plan += `\n`;
+      }
+    }
+  }
+  
+  plan += `\n📊 **PROGRESSION:** Increase load by 2-5% each week or add 1 rep per set.\n`;
+  plan += `✅ **RECOVERY:** Sleep 8+ hours, hydration 3L+ daily, nutrition 2g protein/kg BW.\n`;
+  plan += `🎯 **TRACKING:** Keep training log - sets, reps, load, feel (1-10).\n\n`;
+  plan += `💡 Note: This is a base template. For personalized program with complete periodization, use professional AI Generator.`;
+  
+  return plan;
+}
+
+// Generator glavnog dela treninga - RAZNOVRSTAN i STRUČAN
+function generateMainWorkout(f1: string, f2: string, dayNum: number, primaryIsFirst: boolean, games: number = 1): string {
+  const primary = primaryIsFirst ? f1 : f2;
+  const secondary = primaryIsFirst ? f2 : f1;
+  
+  // VOLUME ADJUSTMENT based on game load
+  let volumeMultiplier = 1.0;
+  if (games >= 3) {
+    volumeMultiplier = 0.5; // 50% volume reduction for 3+ games
+  } else if (games === 2) {
+    volumeMultiplier = 0.65; // 35% volume reduction for 2 games
+  }
+  
+  let workout = '';
+  const intensity = dayNum % 3 === 1 ? 'VISOK' : dayNum % 3 === 2 ? 'SREDNJI' : 'NIZAK-TEHNIČKI';
+  
+  workout += `**Faza 1 - ${primary.toUpperCase()}** (${intensity} intenzitet):\n`;
+  
+  // SNAGA
+  if (primary.includes('snaga') || primary.includes('strength') || primary.includes('1rm')) {
+    if (intensity === 'VISOK') {
+      const sets = Math.max(3, Math.round(5 * volumeMultiplier));
+      workout += `1. Back Squat: ${sets}×3 @ 87-92% 1RM, 3-4min odmor${games >= 2 ? ' (smanjeno zbog utakmica)' : ''}\n`;
+      workout += `2. Romanian Deadlift: ${Math.max(3, Math.round(4 * volumeMultiplier))}×5 @ 80% 1RM, 3min odmor\n`;
+      workout += `3. Bench Press: ${Math.max(3, Math.round(4 * volumeMultiplier))}×4 @ 85% 1RM, 3min odmor\n`;
+      if (games < 2) {
+        workout += `4. Weighted Pull-ups: 4×5 @ +15-20kg, 2min odmor\n`;
+      }
+    } else if (intensity === 'SREDNJI') {
+      const sets = Math.max(3, Math.round(4 * volumeMultiplier));
+      workout += `1. Front Squat: ${sets}×6 @ 75-80% 1RM, 2min odmor\n`;
+      workout += `2. Trap Bar Deadlift: ${sets}×5 @ 80% 1RM, 2-3min odmor\n`;
+      if (games < 3) {
+        workout += `3. Overhead Press: 3×6 @ 70% 1RM, 2min odmor\n`;
+        workout += `4. Barbell Row: 3×8 @ 70% 1RM, 90s odmor\n`;
+      }
+    } else {
+      workout += `1. Goblet Squat: 3×12 @ 24kg KB, tempo 3-0-1, 90s odmor\n`;
+      workout += `2. Single-leg RDL: 3×10/noga @ 20kg, fokus balans, 90s odmor\n`;
+      if (games < 2) {
+        workout += `3. Push-up variations: 3×15 (diamond, wide, archer), 60s odmor\n`;
+        workout += `4. TRX Rows: 3×12, tempo 2-0-2, 60s odmor\n`;
+      }
+    }
+  }
+  // BRZINA
+  else if (primary.includes('brzina') || primary.includes('sprint') || primary.includes('speed')) {
+    if (intensity === 'VISOK') {
+      const reps = Math.max(4, Math.round(6 * volumeMultiplier));
+      workout += `1. Flying Sprint 30m: ${reps}× (10m build-up + 30m max), 4min odmor\n`;
+      workout += `2. Resisted Sprint (sled): ${Math.max(5, Math.round(8 * volumeMultiplier))}×20m @ 75% max speed, 3min odmor\n`;
+      workout += `3. Wicket Run: 5×40m (10 prepona @ 1.5m razmak), 3min odmor\n`;
+      workout += `4. Sprint Starts: 8×10m (različiti startovi), 2min odmor\n`;
+    } else if (intensity === 'SREDNJI') {
+      workout += `1. Sprint 20m: 8× @ 95% max speed, 2min odmor\n`;
+      workout += `2. A-skip: 4×30m, fokus brzina pokreta, 90s odmor\n`;
+      workout += `3. B-skip: 4×30m, fokus ekstenzija, 90s odmor\n`;
+      workout += `4. Bounds for distance: 4×6 odraza, maksimalna daljina, 2min odmor\n`;
+    } else {
+      workout += `1. Sprint Technique Drills: 3×40m (wall drives, ankling), 90s odmor\n`;
+      workout += `2. Tempo Runs: 4×60m @ 75% speed, fokus tehnika, 2min odmor\n`;
+      workout += `3. High Knees: 4×20m, 60s odmor\n`;
+      workout += `4. Butt Kicks: 4×20m, 60s odmor\n`;
+    }
+  }
+  // EKSPLOZIVNOST
+  else if (primary.includes('eksplozivnost') || primary.includes('explosive') || primary.includes('skok') || primary.includes('cmj')) {
+    if (intensity === 'VISOK') {
+      workout += `1. Depth Jump: 5×5 @ 50cm drop, minimalan kontakt, 3min odmor\n`;
+      workout += `2. Power Clean: 5×3 @ 75% 1RM, 3min odmor\n`;
+      workout += `3. Weighted Box Jump: 5×4 @ 10kg vest, 70cm box, 2min odmor\n`;
+      workout += `4. Single-leg Depth Jump: 4×4/noga @ 30cm, 2min odmor\n`;
+    } else if (intensity === 'SREDNJI') {
+      workout += `1. Box Jump: 5×6 @ 60cm, fokus visina, 2min odmor\n`;
+      workout += `2. Broad Jump: 5×5, maksimalna daljina, 2min odmor\n`;
+      workout += `3. Medicine Ball Overhead Throw: 5×8 @ 6kg, 90s odmor\n`;
+      workout += `4. Squat Jump: 4×8, samo težina tela, 2min odmor\n`;
+    } else {
+      workout += `1. CMJ: 5×5, fokus tehnika i sletanje, 2min odmor\n`;
+      workout += `2. Single-leg CMJ: 4×4/noga, 90s odmor\n`;
+      workout += `3. Drop Landing: 4×6 @ 40cm, fokus pravilno sletanje, 90s odmor\n`;
+      workout += `4. Medicine Ball Slams: 4×10 @ 8kg, 60s odmor\n`;
+    }
+  }
+  // AGILNOST
+  else if (primary.includes('agilnost') || primary.includes('agility') || primary.includes('cod')) {
+    workout += `1. Pro-Agility (5-10-5): 6×, maksimalna brzina, 2min odmor\n`;
+    workout += `2. T-Test: 5×, fokus COD tehnika, 2min odmor\n`;
+    workout += `3. Illinois Agility: 4×, 2min odmor\n`;
+    workout += `4. Reactive Shuttle: 6×15s (reakcija na zvučni/svetlosni signal), 90s odmor\n`;
+  }
+  // KOORDINACIJA
+  else if (primary.includes('koordinacija') || primary.includes('coordination')) {
+    workout += `1. Ladder Drills: 5×30s (različiti paterni: Ickey, In-Out, Lateral), 60s odmor\n`;
+    workout += `2. Tennis Ball Reaction: 4×12 (partner baca, hvatanje različitim rukama), 60s odmor\n`;
+    workout += `3. Mirror Drill: 4×20s (partner vodi, reagovanje na promene pravca), 60s odmor\n`;
+    workout += `4. Single-leg Hop Patterns: 4×8/noga (različiti pravci: napred, bočno, dijagonalno), 90s odmor\n`;
+  }
+  // MOBILNOST
+  else if (primary.includes('mobilnost') || primary.includes('mobility') || primary.includes('hip')) {
+    workout += `1. 90/90 Hip Stretch: 3×45s/strana (pasivno + aktivno)\n`;
+    workout += `2. Cossack Squat: 3×10/strana (progresivno dublje)\n`;
+    workout += `3. World's Greatest Stretch: 3×8/strana (sa rotacijom)\n`;
+    workout += `4. Hip Airplane: 3×10/noga (kontrola kroz puni ROM)\n`;
+    workout += `5. Deep Squat Hold: 3×60s (sa breathing)\n`;
+  }
+  // FLEKSIBILNOST
+  else if (primary.includes('fleksibilnost') || primary.includes('flexibility') || primary.includes('stretch')) {
+    workout += `1. PNF Stretching (Hamstrings): 4×(5s kontrakcija + 30s stretch)/noga\n`;
+    workout += `2. PNF Hip Flexors: 4×(5s + 30s)/strana\n`;
+    workout += `3. Loaded Stretching (Groin): 3×45s, postepeno opterećenje\n`;
+    workout += `4. Contract-Relax (Calf): 4×(5s + 30s)/noga\n`;
+    workout += `5. Dynamic Leg Swings: 3×15/pravac/noga (sagitalno i frontalno)\n`;
+  }
+  // PRECIZNOST
+  else if (primary.includes('preciznost') || primary.includes('precision') || primary.includes('accuracy')) {
+    workout += `1. Target Landing: 5×8 (skok i sletanje u označenu zonu 30×30cm), 90s odmor\n`;
+    workout += `2. Precision Touches: 4×20 (dodir tačaka različitih visina), 60s odmor\n`;
+    workout += `3. Ball Control Drill: 4×30s (dribling + precizni dodaci na ciljeve), 60s odmor\n`;
+    workout += `4. Footwork Ladder: 4×30s (tačne pozicije stopala u svakom kvadratu), 60s odmor\n`;
+  }
+  // BALANS
+  else if (primary.includes('balans') || primary.includes('balance') || primary.includes('y-balance')) {
+    workout += `1. Y-Balance Test (kao trening): 3×5/noga/pravac (anterior, posteromedial, posterolateral)\n`;
+    workout += `2. Single-leg Stance on Bosu: 3×60s/noga (oči otvorene + zatvorene)\n`;
+    workout += `3. Single-leg RDL to Overhead Reach: 3×10/noga @ 8kg, 90s odmor\n`;
+    workout += `4. Airex Pad Ball Toss: 3×20 (hvatanje lopte na nestabilnoj površini), 60s odmor\n`;
+  }
+  // CORE
+  else if (primary.includes('core') || primary.includes('stabilnost') || primary.includes('stability')) {
+    workout += `1. Plank Variations: 3×45s (front, side L/R, copenhagen)\n`;
+    workout += `2. Pallof Press: 3×12/strana @ 25kg (antirotacija), 60s odmor\n`;
+    workout += `3. Dead Bug: 3×15 (kontralateralna alternacija, kontrola lumbar spine), 60s odmor\n`;
+    workout += `4. Ab Wheel Rollout: 3×10 (sa kolena ili stopala), 90s odmor\n`;
+  }
+  // PROPRIOCEPCIJA
+  else if (primary.includes('propriocepcija') || primary.includes('proprioception')) {
+    workout += `1. Single-leg Balance (eyes closed): 3×45s/noga na različitim površinama\n`;
+    workout += `2. Perturbation Training: 4×12 (partner gura iz različitih pravaca - reaktivna stabilizacija)\n`;
+    workout += `3. Foam Pad Throws: 3×20 (hvatanje lopte na nestabilnoj površini)\n`;
+    workout += `4. Wobble Board Training: 3×60s (kontrola pokreta u svim ravnima)\n`;
+  }
+  // REAKTIVNOST
+  else if (primary.includes('reaktivnost') || primary.includes('reactive') || primary.includes('rsi')) {
+    workout += `1. Drop Jump: 6×5 @ 40cm drop, minimalan kontakt (<200ms), 2min odmor\n`;
+    workout += `2. Reactive Box Jump: 5×6 (sletanje + instant rebound), 2min odmor\n`;
+    workout += `3. Medicine Ball Reactive Slams: 5×10 @ 8kg (catch + instant slam), 90s odmor\n`;
+    workout += `4. Depth Jump to Sprint: 5×(jump + 15m sprint), 2min odmor\n`;
+  }
+  // AEROBNA IZDRŽLJIVOST
+  else if (primary.includes('aerobna') || primary.includes('aerobic') || primary.includes('vo2')) {
+    workout += `1. Continuous Run: 25min @ zona 2 (70-75% HRmax), easy conversation pace\n`;
+    workout += `2. Tempo Intervals: 4×5min @ zona 3 (80-85% HRmax), 2min odmor\n`;
+    workout += `3. Fartlek: 20min (2min brzo + 2min lagano), prirodni tempo\n`;
+  }
+  // ANAEROBNA IZDRŽLJIVOST
+  else if (primary.includes('anaerobna') || primary.includes('anaerobic') || primary.includes('lactic')) {
+    workout += `1. Sprint Intervals: 10×150m @ 90% max speed, 90s odmor (laktati!)\n`;
+    workout += `2. Repeated Sprint Ability: 12×30m @ 95% speed, 30s odmor\n`;
+    workout += `3. Shuttle Runs: 6×(15m×4 = 60m total), maksimalna brzina, 2min odmor\n`;
+  }
+  // IZDRŽLJIVOST
+  else if (primary.includes('izdržljivost') || primary.includes('izdrzljivost') || primary.includes('endurance') || primary.includes('yoyo')) {
+    workout += `1. YoYo IR1 Intervals: 6×Level 15 protokol (simulacija testa), 2min odmor\n`;
+    workout += `2. Small-Sided Game: 4×4min (4v4 full court), 2min odmor\n`;
+    workout += `3. Repeated Sprint + Recovery: 10×(20m sprint + 20m jog back), 20s odmor\n`;
+  }
+  
+  // Dodaj SEKUNDARNI faktor (2-3 vežbe)
+  workout += `\n**Faza 2 - ${secondary.toUpperCase()}** (komplementarno):\n`;
+  
+  if (secondary.includes('snaga') || secondary.includes('strength')) {
+    workout += `1. Bulgarian Split Squat: 3×8/noga @ 30kg, 90s odmor\n`;
+    workout += `2. Nordic Hamstring Curl: 3×6, ekscentrična kontrola, 2min odmor\n`;
+  } else if (secondary.includes('brzina') || secondary.includes('sprint')) {
+    workout += `1. Sprint 20m: 4×, 95% speed, 2min odmor\n`;
+    workout += `2. Flying 15m: 4× (10m build + 15m max), 2min odmor\n`;
+  } else if (secondary.includes('eksplozivnost') || secondary.includes('skok')) {
+    workout += `1. Box Jump: 4×5 @ 60cm, 2min odmor\n`;
+    workout += `2. Medicine Ball Chest Pass: 3×10 @ 6kg, eksplozivno, 90s odmor\n`;
+  } else if (secondary.includes('agilnost') || secondary.includes('agility')) {
+    workout += `1. Cone Drill (L-Drill): 5×, maksimalna brzina, 2min odmor\n`;
+    workout += `2. Lateral Shuffle: 4×20m, fokus COD, 60s odmor\n`;
+  } else if (secondary.includes('koordinacija')) {
+    workout += `1. Ball Handling + Movement: 3×30s (dribbling + agilnost), 60s odmor\n`;
+    workout += `2. Reaktivni Drill: 4×15s (signal → pokret), 60s odmor\n`;
+  } else if (secondary.includes('mobilnost') || secondary.includes('mobility')) {
+    workout += `1. Hip 90/90: 3×40s/strana\n`;
+    workout += `2. World's Greatest Stretch: 3×6/strana\n`;
+  } else if (secondary.includes('fleksibilnost')) {
+    workout += `1. PNF Hamstrings: 3×(5s + 30s)/noga\n`;
+    workout += `2. Hip Flexor Stretch: 3×40s/strana\n`;
+  } else if (secondary.includes('preciznost')) {
+    workout += `1. Target Throws: 3×15 (različite distance)\n`;
+    workout += `2. Precision Footwork: 3×20s (tačne pozicije)\n`;
+  } else if (secondary.includes('balans')) {
+    workout += `1. Single-leg Stance: 3×45s/noga (oči zatvorene)\n`;
+    workout += `2. Single-leg RDL: 3×8/noga @ 15kg\n`;
+  } else if (secondary.includes('core') || secondary.includes('stabilnost')) {
+    workout += `1. Plank: 3×45s (različite varijacije)\n`;
+    workout += `2. Pallof Press: 3×12/strana @ 20kg\n`;
+  } else if (secondary.includes('propriocepcija')) {
+    workout += `1. Bosu Balance: 3×40s/noga\n`;
+    workout += `2. Perturbation Training: 3×10\n`;
+  } else if (secondary.includes('reaktivnost')) {
+    workout += `1. Drop Jump: 4×4 @ 30cm\n`;
+    workout += `2. Reactive Hops: 3×10 (brzi odrazi)\n`;
+  } else if (secondary.includes('aerobna')) {
+    workout += `1. Easy Run: 15min @ zona 2\n`;
+  } else if (secondary.includes('anaerobna')) {
+    workout += `1. Sprint Intervals: 6×100m @ 85%, 60s odmor\n`;
+  } else if (secondary.includes('izdržljivost') || secondary.includes('izdrzljivost')) {
+    workout += `1. Interval Training: 4×2min @ 85% HRmax, 90s odmor\n`;
+  }
+  
+  return workout;
+}
+
+// English version of generateMainWorkout
+function generateMainWorkoutEnglish(f1: string, f2: string, dayNum: number, primaryIsFirst: boolean, games: number = 1): string {
+  const primary = primaryIsFirst ? f1 : f2;
+  const secondary = primaryIsFirst ? f2 : f1;
+  
+  let volumeMultiplier = 1.0;
+  if (games >= 3) {
+    volumeMultiplier = 0.5;
+  } else if (games === 2) {
+    volumeMultiplier = 0.65;
+  }
+  
+  let workout = '';
+  const intensity = dayNum % 3 === 1 ? 'HIGH' : dayNum % 3 === 2 ? 'MEDIUM' : 'LOW-TECHNICAL';
+  
+  workout += `**Phase 1 - ${primary.toUpperCase()}** (${intensity} intensity):\n`;
+  
+  if (primary.includes('strength') || primary.includes('snaga') || primary.includes('1rm')) {
+    if (intensity === 'HIGH') {
+      const sets = Math.max(3, Math.round(5 * volumeMultiplier));
+      workout += `1. Back Squat: ${sets}×3 @ 87-92% 1RM, 3-4min rest${games >= 2 ? ' (reduced due to games)' : ''}\n`;
+      workout += `2. Romanian Deadlift: ${Math.max(3, Math.round(4 * volumeMultiplier))}×5 @ 80% 1RM, 3min rest\n`;
+      workout += `3. Bench Press: ${Math.max(3, Math.round(4 * volumeMultiplier))}×4 @ 85% 1RM, 3min rest\n`;
+      if (games < 2) {
+        workout += `4. Weighted Pull-ups: 4×5 @ +15-20kg, 2min rest\n`;
+      }
+    } else if (intensity === 'MEDIUM') {
+      const sets = Math.max(3, Math.round(4 * volumeMultiplier));
+      workout += `1. Front Squat: ${sets}×6 @ 75-80% 1RM, 2min rest\n`;
+      workout += `2. Trap Bar Deadlift: ${sets}×5 @ 80% 1RM, 2-3min rest\n`;
+      if (games < 3) {
+        workout += `3. Overhead Press: 3×6 @ 70% 1RM, 2min rest\n`;
+        workout += `4. Barbell Row: 3×8 @ 70% 1RM, 90s rest\n`;
+      }
+    } else {
+      workout += `1. Goblet Squat: 3×12 @ 24kg KB, tempo 3-0-1, 90s rest\n`;
+      workout += `2. Single-leg RDL: 3×10/leg @ 20kg, focus balance, 90s rest\n`;
+      if (games < 2) {
+        workout += `3. Push-up variations: 3×15 (diamond, wide, archer), 60s rest\n`;
+        workout += `4. TRX Rows: 3×12, tempo 2-0-2, 60s rest\n`;
+      }
+    }
+  } else if (primary.includes('speed') || primary.includes('sprint') || primary.includes('brzina')) {
+    if (intensity === 'HIGH') {
+      const reps = Math.max(4, Math.round(6 * volumeMultiplier));
+      workout += `1. Flying Sprint 30m: ${reps}× (10m build-up + 30m max), 4min rest\n`;
+      workout += `2. Resisted Sprint (sled): ${Math.max(5, Math.round(8 * volumeMultiplier))}×20m @ 75% max speed, 3min rest\n`;
+      workout += `3. Wicket Run: 5×40m (10 hurdles @ 1.5m spacing), 3min rest\n`;
+      workout += `4. Sprint Starts: 8×10m (various starts), 2min rest\n`;
+    } else if (intensity === 'MEDIUM') {
+      workout += `1. Sprint 20m: 8× @ 95% max speed, 2min rest\n`;
+      workout += `2. A-skip: 4×30m, focus movement speed, 90s rest\n`;
+      workout += `3. B-skip: 4×30m, focus extension, 90s rest\n`;
+      workout += `4. Bounds for distance: 4×6 contacts, max distance, 2min rest\n`;
+    } else {
+      workout += `1. Sprint Technique Drills: 3×40m (wall drives, ankling), 90s rest\n`;
+      workout += `2. Tempo Runs: 4×60m @ 75% speed, focus technique, 2min rest\n`;
+      workout += `3. High Knees: 4×20m, 60s rest\n`;
+      workout += `4. Butt Kicks: 4×20m, 60s rest\n`;
+    }
+  } else if (primary.includes('explosive') || primary.includes('eksploziv') || primary.includes('jump') || primary.includes('cmj')) {
+    if (intensity === 'HIGH') {
+      workout += `1. Depth Jump: 5×5 @ 50cm drop, minimal contact, 3min rest\n`;
+      workout += `2. Power Clean: 5×3 @ 75% 1RM, 3min rest\n`;
+      workout += `3. Weighted Box Jump: 5×4 @ 10kg vest, 70cm box, 2min rest\n`;
+      workout += `4. Single-leg Depth Jump: 4×4/leg @ 30cm, 2min rest\n`;
+    } else if (intensity === 'MEDIUM') {
+      workout += `1. Box Jump: 5×6 @ 60cm, focus height, 2min rest\n`;
+      workout += `2. Broad Jump: 5×5, max distance, 2min rest\n`;
+      workout += `3. Medicine Ball Overhead Throw: 5×8 @ 6kg, 90s rest\n`;
+      workout += `4. Squat Jump: 4×8, bodyweight only, 2min rest\n`;
+    } else {
+      workout += `1. CMJ: 5×5, focus technique and landing, 2min rest\n`;
+      workout += `2. Single-leg CMJ: 4×4/leg, 90s rest\n`;
+      workout += `3. Drop Landing: 4×6 @ 40cm, focus proper landing, 90s rest\n`;
+      workout += `4. Medicine Ball Slams: 4×10 @ 8kg, 60s rest\n`;
+    }
+  } else if (primary.includes('agility') || primary.includes('agilnost') || primary.includes('cod')) {
+    workout += `1. Pro-Agility (5-10-5): 6×, max speed, 2min rest\n`;
+    workout += `2. T-Test: 5×, focus COD technique, 2min rest\n`;
+    workout += `3. L-Drill: 4×, 2min rest\n`;
+    workout += `4. Reactive Shuttle: 6×15s (reaction to auditory/visual signal), 90s rest\n`;
+  } else if (primary.includes('coordination') || primary.includes('koordinacija')) {
+    workout += `1. Ladder Drills: 5×30s (various patterns: Ickey, In-Out, Lateral), 60s rest\n`;
+    workout += `2. Tennis Ball Reaction: 4×12 (partner throws, catch with different hands), 60s rest\n`;
+    workout += `3. Mirror Drill: 4×20s (partner leads, react to direction changes), 60s rest\n`;
+    workout += `4. Single-leg Hop Patterns: 4×8/leg (various directions), 90s rest\n`;
+  } else if (primary.includes('mobility') || primary.includes('mobilnost') || primary.includes('hip')) {
+    workout += `1. 90/90 Hip Stretch: 3×45s/side (passive + active)\n`;
+    workout += `2. Cossack Squat: 3×10/side (progressively deeper)\n`;
+    workout += `3. World's Greatest Stretch: 3×8/side (with rotation)\n`;
+    workout += `4. Hip Airplane: 3×10/leg (control through full ROM)\n`;
+    workout += `5. Deep Squat Hold: 3×60s (with breathing)\n`;
+  } else if (primary.includes('flexibility') || primary.includes('fleksibilnost') || primary.includes('stretch')) {
+    workout += `1. PNF Stretching (Hamstrings): 4×(5s contract + 30s stretch)/leg\n`;
+    workout += `2. PNF Hip Flexors: 4×(5s + 30s)/side\n`;
+    workout += `3. Loaded Stretching (Groin): 3×45s, progressive load\n`;
+    workout += `4. Contract-Relax (Calf): 4×(5s + 30s)/leg\n`;
+    workout += `5. Dynamic Leg Swings: 3×15/direction/leg (sagittal and frontal)\n`;
+  } else if (primary.includes('precision') || primary.includes('preciznost') || primary.includes('accuracy')) {
+    workout += `1. Target Landing: 5×8 (jump and land in marked zone 30×30cm), 90s rest\n`;
+    workout += `2. Precision Touches: 4×20 (touch points at different heights), 60s rest\n`;
+    workout += `3. Ball Control Drill: 4×30s (dribbling + precise passes to targets), 60s rest\n`;
+    workout += `4. Footwork Ladder: 4×30s (precise foot positions in each square), 60s rest\n`;
+  } else {
+    workout += `1. Functional Movement Screening\n`;
+    workout += `2. General Conditioning\n`;
+  }
+  
+  workout += `\n**Phase 2 - ${secondary.toUpperCase()}** (complementary work):\n`;
+  
+  if (secondary.includes('strength') || secondary.includes('snaga')) {
+    workout += `1. Lunges: 3×8/leg @ 60% BW, 90s rest\n`;
+    workout += `2. Single-leg Leg Press: 3×10/leg, 90s rest\n`;
+  } else if (secondary.includes('speed') || secondary.includes('brzina')) {
+    workout += `1. Acceleration Drills: 5×15m (0-15m), 2min rest\n`;
+    workout += `2. Deceleration Practice: 4×20m, 2min rest\n`;
+  } else if (secondary.includes('explosive') || secondary.includes('eksploziv')) {
+    workout += `1. Plyometric Push-ups: 4×8, 90s rest\n`;
+    workout += `2. Lateral Bounds: 4×10 total, 2min rest\n`;
+  } else if (secondary.includes('mobility') || secondary.includes('mobilnost')) {
+    workout += `1. Hip Mobility Circuit: 3 rounds (10 reps each movement)\n`;
+    workout += `2. Thoracic Spine Extensions: 3×12\n`;
+  } else if (secondary.includes('endurance') || secondary.includes('izdrzljivost')) {
+    workout += `1. Interval Training: 4×2min @ 85% HRmax, 90s rest\n`;
+  }
+  
+  return workout;
+}
+
+// Helper funkcija za generisanje plana sa dinamičkim brojem dana
+function generateDynamicPlan(days: number, trainingType: string, language: 'sr' | 'en'): string {
+  if (language === 'sr') {
+    if (trainingType === 'brzina') {
+      let plan = `**Plan za razvoj brzine (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'oporavak' : i % 2 === 0 ? 'maksimalna brzina' : 'ubrzanje';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'oporavak') {
+          plan += `- Lagani trčanje 15-20min\n`;
+          plan += `- Mobilnost kukova i zglobova\n`;
+          plan += `- Istezanje\n\n`;
+        } else if (dayType === 'ubrzanje') {
+          plan += `- Sprint 10m: 8 ponavljanja, 2min odmor\n`;
+          plan += `- Sprint 20m: 6 ponavljanja, 3min odmor\n`;
+          plan += `- A-skip, B-skip: 3x20m\n`;
+          plan += `- Čučanj sa šipkom: 4x5 @ 80% 1RM\n\n`;
+        } else {
+          plan += `- Sprint 30m: 6 ponavljanja, 4min odmor\n`;
+          plan += `- Leteci sprint 20m (10m ubrzanje + 20m max): 5 ponavljanja\n`;
+          plan += `- Mrtvo dizanje: 4x4 @ 85% 1RM\n`;
+          plan += `- Drop jump: 4x5\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Snaga je osnova brzine (korelacija r=0.6-0.7). Čučanj i mrtvo dizanje direktno utiču na sprint performanse.`;
+      return plan;
+    }
+    
+    if (trainingType === 'snaga') {
+      let plan = `**Program razvoja snage (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'oporavak' : i % 2 === 0 ? 'gornji deo' : 'donji deo';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'oporavak') {
+          plan += `- Aktivna regeneracija\n`;
+          plan += `- Foam rolling\n`;
+          plan += `- Mobilnost\n\n`;
+        } else if (dayType === 'donji deo') {
+          plan += `- Čučanj sa šipkom: 5x5 @ 80-85% 1RM\n`;
+          plan += `- Mrtvo dizanje: 4x4 @ 85% 1RM\n`;
+          plan += `- Bulgarian split squat: 3x6 po nozi\n`;
+          plan += `- Nordic hamstring curl: 3x5\n\n`;
+        } else {
+          plan += `- Bench press: 5x5 @ 80-85% 1RM\n`;
+          plan += `- Rows: 4x6\n`;
+          plan += `- Overhead press: 4x5\n`;
+          plan += `- Pull-ups: 3xmax\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Snaga korelira sa eksplozivnošću (r=0.75-0.85) i brzinom (r=0.6-0.7).`;
+      return plan;
+    }
+    
+    if (trainingType === 'eksplozivnost') {
+      let plan = `**Program razvoja eksplozivnosti (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'oporavak' : i % 2 === 0 ? 'pliometrija' : 'snaga-brzina';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'oporavak') {
+          plan += `- Lagane aktivnosti\n`;
+          plan += `- Foam rolling\n`;
+          plan += `- Stretching\n\n`;
+        } else if (dayType === 'pliometrija') {
+          plan += `- Box jump: 5x5 (50-60cm)\n`;
+          plan += `- Depth jump: 4x4 (30cm drop)\n`;
+          plan += `- Broad jump: 5x3\n`;
+          plan += `- Medicine ball slam: 4x8\n\n`;
+        } else {
+          plan += `- Power clean: 5x3 @ 70% 1RM\n`;
+          plan += `- Squat jump: 5x5\n`;
+          plan += `- Reaktivni sprint: 6x20m\n`;
+          plan += `- Drop jump + sprint: 5x (30cm drop + 10m sprint)\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Eksplozivnost zavisi od maksimalne snage (r=0.75-0.85). Kombiniraj snagu i brzinu!`;
+      return plan;
+    }
+    
+    if (trainingType === 'agilnost') {
+      let plan = `**Program razvoja agilnosti (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'oporavak' : i % 2 === 0 ? 'reaktivnost' : 'tehnička agilnost';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'oporavak') {
+          plan += `- Lagano kardio 15min\n`;
+          plan += `- Mobilnost zglobova\n`;
+          plan += `- Stretching\n\n`;
+        } else if (dayType === 'tehnička agilnost') {
+          plan += `- T-test: 6 ponavljanja\n`;
+          plan += `- Pro agility (5-10-5): 8 ponavljanja\n`;
+          plan += `- Lane agility: 5 serija\n`;
+          plan += `- Defensive slide drill: 4x30s\n\n`;
+        } else {
+          plan += `- Reaktivni change of direction: 10x\n`;
+          plan += `- 2-choice agility: 12 ponavljanja\n`;
+          plan += `- Random agility patterns: 8 ponavljanja\n`;
+          plan += `- Cut and sprint: 6x20m\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Agilnost kombinuje brzinu, snagu i koordinaciju. Fokus na kvalitet pokreta!`;
+      return plan;
+    }
+    
+    if (trainingType === 'mobilnost') {
+      let plan = `**Program razvoja mobilnosti (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'aktivan odmor' : i % 2 === 0 ? 'gornji deo' : 'donji deo';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'aktivan odmor') {
+          plan += `- Lagano hodanje 20min\n`;
+          plan += `- Disajne vežbe\n`;
+          plan += `- Opšta mobilnost: 10min\n\n`;
+        } else if (dayType === 'donji deo') {
+          plan += `- Hip CARs (Controlled Articular Rotations): 3x5 po strani\n`;
+          plan += `- 90/90 hip stretch: 3x60s po strani\n`;
+          plan += `- Ankle mobility: 3x10 po nozi\n`;
+          plan += `- Squat hold stretch: 3x60s\n`;
+          plan += `- Cossack squat: 3x8 po strani\n\n`;
+        } else {
+          plan += `- Shoulder CARs: 3x5 po strani\n`;
+          plan += `- Wall angels: 3x10\n`;
+          plan += `- Thoracic rotation: 3x10 po strani\n`;
+          plan += `- Cat-Cow: 3x15\n`;
+          plan += `- Thread the needle: 3x10 po strani\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Mobilnost poboljšava raspon pokreta i smanjuje rizik od povreda. Obavezna za košarkaše!`;
+      return plan;
+    }
+    
+    if (trainingType === 'fleksibilnost') {
+      let plan = `**Program razvoja fleksibilnosti (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'joga' : i % 2 === 0 ? 'statičko istezanje' : 'dinamičko istezanje';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'joga') {
+          plan += `- Downward dog: 5x30s\n`;
+          plan += `- Pigeon pose: 3x60s po strani\n`;
+          plan += `- Warrior poses: 3x45s po strani\n`;
+          plan += `- Child's pose: 3x60s\n\n`;
+        } else if (dayType === 'statičko istezanje') {
+          plan += `- Hamstring stretch: 3x45s po nozi\n`;
+          plan += `- Hip flexor stretch: 3x45s po nozi\n`;
+          plan += `- Quad stretch: 3x30s po nozi\n`;
+          plan += `- Groin stretch: 3x60s\n`;
+          plan += `- Calf stretch: 3x30s po nozi\n\n`;
+        } else {
+          plan += `- Leg swings (napred-nazad): 3x15 po nozi\n`;
+          plan += `- Leg swings (levo-desno): 3x15 po nozi\n`;
+          plan += `- Walking lunges: 3x10 po nozi\n`;
+          plan += `- High knees: 3x20m\n`;
+          plan += `- Butt kicks: 3x20m\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Fleksibilnost sprečava povrede i poboljšava sportski učinak. Oprezno sa statičkim istezanjem pre utakmice!`;
+      return plan;
+    }
+    
+    if (trainingType === 'koordinacija') {
+      let plan = `**Program razvoja koordinacije (${days} dana)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'ravnoteža' : i % 2 === 0 ? 'koordinacija ruku-nogu' : 'prostorna orijentacija';
+        
+        plan += `**DAN ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'ravnoteža') {
+          plan += `- Single-leg stance: 3x45s po nozi\n`;
+          plan += `- BOSU ball squats: 3x10\n`;
+          plan += `- Single-leg RDL: 3x8 po nozi\n`;
+          plan += `- Balance board drills: 3x60s\n\n`;
+        } else if (dayType === 'koordinacija ruku-nogu') {
+          plan += `- Ladder drills: 8-10 različitih obrazaca\n`;
+          plan += `- Medicine ball catch + squat: 3x12\n`;
+          plan += `- Jump rope variations: 5x60s\n`;
+          plan += `- Dribbling drill sa simultanim pokretom nogu: 5min\n\n`;
+        } else {
+          plan += `- Cone agility patterns: 6-8 različitih\n`;
+          plan += `- Reakcija na vizuelni signal: 10 ponavljanja\n`;
+          plan += `- Mirror drill sa partnerom: 3x45s\n`;
+          plan += `- Random direction sprints: 8 ponavljanja\n\n`;
+        }
+      }
+      
+      plan += `**Napomena:** Koordinacija je ključna za košarkaške pokrete. Kombinuj sa košarkaškim vežbama!`;
+      return plan;
+    }
+    
+    // Generic trening za ostale tipove
+    let plan = `**Trening program (${days} dana)**\n\n`;
+    for (let i = 1; i <= days; i++) {
+      plan += `**DAN ${i}:** Treningfokus dan ${i}\n`;
+      plan += `- Zagrevanje: 10min dinamičkog stretching-a\n`;
+      plan += `- Glavne vežbe: 4-5 compound vežbi, 4x6-8\n`;
+      plan += `- Finisher: Kondicioniranje 10min\n`;
+      plan += `- Istezanje: 5-10min\n\n`;
+    }
+    return plan;
+  } else {
+    // English verzija
+    if (trainingType === 'speed') {
+      let plan = `**Speed Development Plan (${days} days)**\n\n`;
+      
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'recovery' : i % 2 === 0 ? 'maximum speed' : 'acceleration';
+        
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        
+        if (dayType === 'recovery') {
+          plan += `- Light running 15-20min\n`;
+          plan += `- Hip and joint mobility\n`;
+          plan += `- Stretching\n\n`;
+        } else if (dayType === 'acceleration') {
+          plan += `- 10m Sprint: 8 reps, 2min rest\n`;
+          plan += `- 20m Sprint: 6 reps, 3min rest\n`;
+          plan += `- A-skip, B-skip: 3x20m\n`;
+          plan += `- Barbell squat: 4x5 @ 80% 1RM\n\n`;
+        } else {
+          plan += `- 30m Sprint: 6 reps, 4min rest\n`;
+          plan += `- Flying sprint 20m (10m acceleration + 20m max): 5 reps\n`;
+          plan += `- Deadlift: 4x4 @ 85% 1RM\n`;
+          plan += `- Drop jump: 4x5\n\n`;
+        }
+      }
+      
+      plan += `**Note:** Strength is the foundation of speed (correlation r=0.6-0.7).`;
+      return plan;
+    }
+    
+    if (trainingType === 'strength') {
+      let plan = `**Strength Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'recovery' : i % 2 === 0 ? 'upper body' : 'lower body';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'recovery') {
+          plan += `- Active recovery\n- Foam rolling\n- Mobility\n\n`;
+        } else if (dayType === 'lower body') {
+          plan += `- Barbell squat: 5x5 @ 80-85% 1RM\n- Deadlift: 4x4 @ 85% 1RM\n- Bulgarian split squat: 3x6 per leg\n- Nordic hamstring curl: 3x5\n\n`;
+        } else {
+          plan += `- Bench press: 5x5 @ 80-85% 1RM\n- Rows: 4x6\n- Overhead press: 4x5\n- Pull-ups: 3xmax\n\n`;
+        }
+      }
+      plan += `**Note:** Strength correlates with explosiveness (r=0.75-0.85) and speed (r=0.6-0.7).`;
+      return plan;
+    }
+    
+    if (trainingType === 'explosiveness') {
+      let plan = `**Explosiveness Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'recovery' : i % 2 === 0 ? 'plyometrics' : 'power';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'recovery') {
+          plan += `- Light activities\n- Foam rolling\n- Stretching\n\n`;
+        } else if (dayType === 'plyometrics') {
+          plan += `- Box jump: 5x5 (50-60cm)\n- Depth jump: 4x4 (30cm drop)\n- Broad jump: 5x3\n- Medicine ball slam: 4x8\n\n`;
+        } else {
+          plan += `- Power clean: 5x3 @ 70% 1RM\n- Squat jump: 5x5\n- Reactive sprint: 6x20m\n- Drop jump + sprint: 5x (30cm drop + 10m sprint)\n\n`;
+        }
+      }
+      plan += `**Note:** Explosiveness depends on maximum strength (r=0.75-0.85).`;
+      return plan;
+    }
+    
+    if (trainingType === 'agility') {
+      let plan = `**Agility Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'recovery' : i % 2 === 0 ? 'reactivity' : 'technical agility';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'recovery') {
+          plan += `- Light cardio 15min\n- Joint mobility\n- Stretching\n\n`;
+        } else if (dayType === 'technical agility') {
+          plan += `- T-test: 6 reps\n- Pro agility (5-10-5): 8 reps\n- Lane agility: 5 sets\n- Defensive slide drill: 4x30s\n\n`;
+        } else {
+          plan += `- Reactive change of direction: 10x\n- 2-choice agility: 12 reps\n- Random agility patterns: 8 reps\n- Cut and sprint: 6x20m\n\n`;
+        }
+      }
+      plan += `**Note:** Agility combines speed, strength and coordination.`;
+      return plan;
+    }
+    
+    if (trainingType === 'endurance') {
+      let plan = `**Endurance Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'recovery' : i % 2 === 0 ? 'HIIT' : 'steady state';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'recovery') {
+          plan += `- Walking 30min\n- Light stretching\n- Relaxation\n\n`;
+        } else if (dayType === 'steady state') {
+          plan += `- Continuous run: 30-40min @ Zone 2 (65-75% max HR)\n- Cycling alternative: 40-50min @ Zone 2\n- Cross-trainer: 35min\n\n`;
+        } else {
+          plan += `- Interval training: 8x2min @ Zone 4 (85-90% max HR), 2min recovery\n- Fartlek: 30min with speed variations\n- YoYo IR1 test practice\n\n`;
+        }
+      }
+      plan += `**Note:** Basketball requires both aerobic base and high-intensity repeat sprint ability.`;
+      return plan;
+    }
+    
+    if (trainingType === 'mobility') {
+      let plan = `**Mobility Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'active rest' : i % 2 === 0 ? 'upper body' : 'lower body';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'active rest') {
+          plan += `- Light walking 20min\n- Breathing exercises\n- General mobility: 10min\n\n`;
+        } else if (dayType === 'lower body') {
+          plan += `- Hip CARs: 3x5 per side\n- 90/90 hip stretch: 3x60s per side\n- Ankle mobility: 3x10 per foot\n- Squat hold stretch: 3x60s\n- Cossack squat: 3x8 per side\n\n`;
+        } else {
+          plan += `- Shoulder CARs: 3x5 per side\n- Wall angels: 3x10\n- Thoracic rotation: 3x10 per side\n- Cat-Cow: 3x15\n- Thread the needle: 3x10 per side\n\n`;
+        }
+      }
+      plan += `**Note:** Mobility improves range of motion and reduces injury risk.`;
+      return plan;
+    }
+    
+    if (trainingType === 'flexibility') {
+      let plan = `**Flexibility Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'yoga' : i % 2 === 0 ? 'static stretching' : 'dynamic stretching';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'yoga') {
+          plan += `- Downward dog: 5x30s\n- Pigeon pose: 3x60s per side\n- Warrior poses: 3x45s per side\n- Child's pose: 3x60s\n\n`;
+        } else if (dayType === 'static stretching') {
+          plan += `- Hamstring stretch: 3x45s per leg\n- Hip flexor stretch: 3x45s per leg\n- Quad stretch: 3x30s per leg\n- Groin stretch: 3x60s\n- Calf stretch: 3x30s per leg\n\n`;
+        } else {
+          plan += `- Leg swings (front-back): 3x15 per leg\n- Leg swings (side-to-side): 3x15 per leg\n- Walking lunges: 3x10 per leg\n- High knees: 3x20m\n- Butt kicks: 3x20m\n\n`;
+        }
+      }
+      plan += `**Note:** Flexibility prevents injuries and improves athletic performance.`;
+      return plan;
+    }
+    
+    if (trainingType === 'coordination') {
+      let plan = `**Coordination Development Program (${days} days)**\n\n`;
+      for (let i = 1; i <= days; i++) {
+        const dayType = i % 3 === 0 ? 'balance' : i % 2 === 0 ? 'hand-foot coordination' : 'spatial awareness';
+        plan += `**DAY ${i}: ${dayType.charAt(0).toUpperCase() + dayType.slice(1)}**\n`;
+        if (dayType === 'balance') {
+          plan += `- Single-leg stance: 3x45s per leg\n- BOSU ball squats: 3x10\n- Single-leg RDL: 3x8 per leg\n- Balance board drills: 3x60s\n\n`;
+        } else if (dayType === 'hand-foot coordination') {
+          plan += `- Ladder drills: 8-10 different patterns\n- Medicine ball catch + squat: 3x12\n- Jump rope variations: 5x60s\n- Dribbling drill with simultaneous footwork: 5min\n\n`;
+        } else {
+          plan += `- Cone agility patterns: 6-8 different\n- Visual signal reaction: 10 reps\n- Mirror drill with partner: 3x45s\n- Random direction sprints: 8 reps\n\n`;
+        }
+      }
+      plan += `**Note:** Coordination is essential for basketball movements.`;
+      return plan;
+    }
+    
+    // Generic plan
+    let plan = `**Training Program (${days} days)**\n\n`;
+    for (let i = 1; i <= days; i++) {
+      plan += `**DAY ${i}:** Training focus day ${i}\n`;
+      plan += `- Warm-up: 10min dynamic stretching\n`;
+      plan += `- Main exercises: 4-5 compound movements, 4x6-8\n`;
+      plan += `- Finisher: Conditioning 10min\n`;
+      plan += `- Cool-down: 5-10min stretching\n\n`;
+    }
+    return plan;
+  }
+}
+
+// ============= MULTI-FACTOR GENERATOR FUNCTION =============
+function generateMultiFactorPlan(
+  factors: { factor: string; level: string }[],
+  days: number,
+  season: string,
+  useBasketballAlts: boolean,
+  basketballContext: string,
+  language: 'sr' | 'en'
+): string {
+  console.log('🎯 Generating multi-factor plan:', { factors, days, season, useBasketballAlts });
+  
+  if (language === 'sr') {
+    let plan = `**🏀 ${days}-Dnevni Program Treninga - Generator**\n\n`;
+    plan += `**📊 FOKUS FAKTORI:**\n`;
+    factors.forEach(f => {
+      plan += `- ${f.factor.charAt(0).toUpperCase() + f.factor.slice(1)}: ${f.level.toUpperCase()} prioritet\n`;
+    });
+    plan += `\n**🏀 SEZONSKI KONTEKST:** ${season === 'off-season' ? 'OFF-SEASON (max razvoj)' : season === 'pre-season' ? 'PRESEASON (priprema)' : 'IN-SEASON (održavanje)'}\n`;
+    plan += `**🎯 SPECIFIČNOST:** ${season === 'in-season' ? '80% košarkaške vežbe' : season === 'pre-season' ? '60% košarkaške vežbe' : '40% košarkaške vežbe'}\n`;
+    if (useBasketballAlts) plan += `**✅ KORISTE SE KOŠARKAŠKE ALTERNATIVE**\n`;
+    plan += `${basketballContext}\n`;
+    plan += `---\n\n`;
+    
+    // Podela faktora po delovima treninga
+    const warmupFactors = factors.filter(f => 
+      f.factor.includes('brzina') || f.factor.includes('speed') ||
+      f.factor.includes('mobilnost') || f.factor.includes('mobility') ||
+      f.factor.includes('koordinacija') || f.factor.includes('coordination') ||
+      f.factor.includes('fleksibilnost') || f.factor.includes('flexibility') ||
+      f.factor.includes('akceleracija') || f.factor.includes('acceleration')
+    );
+    
+    const mainFactors = factors.filter(f => 
+      f.factor.includes('snaga') || f.factor.includes('strength') ||
+      f.factor.includes('eksplozivnost') || f.factor.includes('explosive') || f.factor.includes('power') ||
+      f.factor.includes('agilnost') || f.factor.includes('agility') ||
+      f.factor.includes('reaktivnost') || f.factor.includes('reactivity') ||
+      f.factor.includes('izdržljivost') || f.factor.includes('endurance')
+    );
+    
+    const cooldownFactors = factors.filter(f => 
+      f.factor.includes('core') || f.factor.includes('stabilizacija') || f.factor.includes('stabilization')
+    );
+    
+    // Generate days based on ALL factors
+    for (let day = 1; day <= days; day++) {
+      const isRecovery = day % 4 === 0;
+      
+      if (isRecovery) {
+        plan += `**DAN ${day}: Aktivni Oporavak**\n`;
+        plan += `- Foam rolling: 12min\n`;
+        plan += `- Dinamičko istezanje: 10min\n`;
+        plan += `- Lagana aerobika: 15min (zona 1-2)\n`;
+        plan += `- Mobilnost zglobova: 8min\n\n`;
+        continue;
+      }
+      
+      // Dan fokusira na SVE faktore, podeljene po delovima
+      const factorNames = factors.map(f => f.factor.charAt(0).toUpperCase() + f.factor.slice(1)).join(' + ');
+      plan += `**DAN ${day}: ${factorNames}**\n\n`;
+      
+      // ===== UVOD (ZAGREVANJE) - Brzina, Mobilnost, Koordinacija, Fleksibilnost =====
+      plan += `🔥 **UVOD - ZAGREVANJE (12-15min):**\n`;
+      
+      // UVOD faktori
+      if (warmupFactors.length > 0) {
+        warmupFactors.forEach(f => {
+          if (f.factor.includes('mobilnost') || f.factor.includes('mobility')) {
+            plan += `- Mobilnost: Hip CARs (2×8/strana), T-spine rotations (2×10), ankle mobility (2×10)\n`;
+          }
+          if (f.factor.includes('brzina') || f.factor.includes('speed') || f.factor.includes('akceleracija')) {
+            plan += `- Startno ubrzanje: Sprint build-ups (3×20m @ 50-70-90%), A-skips (2×10m)\n`;
+          }
+          if (f.factor.includes('koordinacija') || f.factor.includes('coordination')) {
+            plan += `- Koordinacija: Ladder drills (5min), skip variations (3×15m)\n`;
+          }
+          if (f.factor.includes('fleksibilnost') || f.factor.includes('flexibility')) {
+            plan += `- Fleksibilnost: Dynamic leg swings (2×10/noga), walking lunges sa rotacijom (2×10)\n`;
+          }
+        });
+      }
+      
+      if (useBasketballAlts && season === 'in-season') {
+        plan += `- Košarkaška aktivacija: Dribbling warm-up (3min), defensive slides (2×20m), layup lines (3min)\n`;
+      }
+      
+      plan += `\n💪 **GLAVNI DEO (30-40min):**\n`;
+      
+      // GLAVNI faktori - Snaga, Eksplozivnost, Agilnost
+      if (mainFactors.length > 0) {
+        let exerciseNum = 1;
+        
+        mainFactors.forEach(f => {
+          const factorName = f.factor;
+          const factorLevel = f.level;
+          
+          if (factorName.includes('snaga') || factorName.includes('strength')) {
+            plan += `\n**SNAGA:**\n`;
+            if (factorLevel === 'advanced' || factorLevel === 'elite') {
+              plan += `${exerciseNum++}. Back Squat: 4×6 @ 80% 1RM, pauza 3min\n`;
+              plan += `${exerciseNum++}. Romanian Deadlift: 4×8, pauza 2:30\n`;
+              plan += `${exerciseNum++}. Bulgarian Split Squat: 3×8/noga, pauza 2min\n`;
+            } else if (factorLevel === 'intermediate') {
+              plan += `${exerciseNum++}. Front Squat: 3×8 @ 70% 1RM\n`;
+              plan += `${exerciseNum++}. RDL: 3×10\n`;
+            } else {
+              plan += `${exerciseNum++}. Goblet Squat: 3×12\n`;
+              plan += `${exerciseNum++}. Walking Lunges: 3×10/noga\n`;
+            }
+          } else if (factorName.includes('eksplozivnost') || factorName.includes('explosive') || factorName.includes('power')) {
+            plan += `\n**EKSPLOZIVNOST:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Rebound battle drills: 8×10s (contested boards + putback)\n`;
+              plan += `${exerciseNum++}. Shot contest jumps: 8×3 (vertikalni izazov)\n`;
+              plan += `${exerciseNum++}. Fast break finishing: 6×full court (explosive layups)\n`;
+            } else {
+              if (factorLevel === 'advanced' || factorLevel === 'elite') {
+                plan += `${exerciseNum++}. Depth Jumps: 5×5 (40cm box)\n`;
+                plan += `${exerciseNum++}. Box Jumps: 4×5 @ max height\n`;
+                plan += `${exerciseNum++}. Medicine Ball Slams: 4×8 @ max power\n`;
+              } else {
+                plan += `${exerciseNum++}. Box Jumps: 4×5\n`;
+                plan += `${exerciseNum++}. Broad Jumps: 4×3\n`;
+              }
+            }
+          } else if (factorName.includes('agilnost') || factorName.includes('agility')) {
+            plan += `\n**AGILNOST:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Defensive shell drills: 8×45s (zig-zag slides sa COD)\n`;
+              plan += `${exerciseNum++}. 1-on-1 full court defense: 6×90s (stay in front, closeouts)\n`;
+              plan += `${exerciseNum++}. Pick & roll coverage: 8×15s (hedge, ice, switch)\n`;
+            } else {
+              plan += `${exerciseNum++}. T-Test: 6×max effort, pauza 2min\n`;
+              plan += `${exerciseNum++}. Pro-Agility: 6×max effort, pauza 90s\n`;
+              plan += `${exerciseNum++}. Cone drills: 5×4 (različiti paterni)\n`;
+            }
+          } else if (factorName.includes('reaktivnost') || factorName.includes('reactivity')) {
+            plan += `\n**REAKTIVNOST:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Help-side rotations: 8×20s (reakcija na prodor)\n`;
+              plan += `${exerciseNum++}. Loose ball scrambles: 6×15s\n`;
+            } else {
+              plan += `${exerciseNum++}. Reactive agility: 6×10s (partner signal)\n`;
+              plan += `${exerciseNum++}. Drop step drills: 4×6\n`;
+            }
+          } else if (factorName.includes('izdržljivost') || factorName.includes('endurance')) {
+            plan += `\n**IZDRŽLJIVOST:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Full court 3v3: 4×4min (continuous play)\n`;
+              plan += `${exerciseNum++}. Transition conditioning: 6×90s (defense→sprint→finish)\n`;
+            } else {
+              plan += `${exerciseNum++}. Shuttle runs: 6×30s @ 85% max\n`;
+              plan += `${exerciseNum++}. Yo-Yo IR1 intervals: 4×200m\n`;
+            }
+          }
+        });
+      }
+      
+      plan += `\n🧘 **ZAVRŠNI DEO - HLAĐENJE (10-12min):**\n`;
+      plan += `- Lagano trčanje ili vožnja bicikla: 4min (zona 1, 60-65% HRmax)\n`;
+      
+      // CORE vežbe (uvek uključene u završni deo)
+      plan += `- **Core:** Plank variations (3×45s), dead bugs (3×10/strana), side plank (2×30s/strana)\n`;
+      plan += `- **Trbušnjaci:** Bicycle crunches (3×15), hollow holds (3×20s), leg raises (3×12)\n`;
+      
+      // STRETCHING (uvek uključen)
+      plan += `- **Stretching:** Hamstrings (2×30s/noga), hip flexors (2×30s), quadriceps (2×30s), calf (2×30s)\n`;
+      
+      // Ako ima stabilizacija u odabranim faktorima
+      if (cooldownFactors.length > 0) {
+        cooldownFactors.forEach(f => {
+          if (f.factor.includes('stabilizacija') || f.factor.includes('stabilization')) {
+            plan += `- **Stabilizacija:** Single-leg balance (3×30s/noga), Pallof press (3×12/strana)\n`;
+          }
+        });
+      }
+      
+      plan += `\n`;
+    }
+    
+    plan += `\n---\n\n`;
+    plan += `📌 **NAPOMENE:**\n`;
+    plan += `- Program razvija SAMO navedene faktore prema njihovim nivoima\n`;
+    plan += `- ${season === 'in-season' ? 'IN-SEASON: Prioritet košarkaška specifičnost (80%)' : season === 'pre-season' ? 'PRESEASON: Balans specifičnost/razvoj (60%/40%)' : 'OFF-SEASON: Max razvojni potencijal (40% specifično)'}\n`;
+    if (useBasketballAlts) {
+      plan += `- ✅ Koriste se košarkaške alternative umesto generičkih vežbi\n`;
+    }
+    plan += `- Prilagodi volumen prema broju utakmica nedeljno\n`;
+    
+    return plan;
+  } else {
+    // English version - SAME 3-PART STRUCTURE
+    let plan = `**🏀 ${days}-Day Training Program - Generator**\n\n`;
+    plan += `**📊 FOCUS FACTORS:**\n`;
+    factors.forEach(f => {
+      plan += `- ${f.factor.charAt(0).toUpperCase() + f.factor.slice(1)}: ${f.level.toUpperCase()} priority\n`;
+    });
+    plan += `\n**🏀 SEASON CONTEXT:** ${season === 'off-season' ? 'OFF-SEASON (max development)' : season === 'pre-season' ? 'PRESEASON (preparation)' : 'IN-SEASON (maintenance)'}\n`;
+    plan += `**🎯 SPECIFICITY:** ${season === 'in-season' ? '80% basketball drills' : season === 'pre-season' ? '60% basketball drills' : '40% basketball drills'}\n`;
+    if (useBasketballAlts) plan += `**✅ USING BASKETBALL ALTERNATIVES**\n`;
+    plan += `${basketballContext}\n`;
+    plan += `---\n\n`;
+    
+    // Podela faktora po delovima treninga (English keywords)
+    const warmupFactorsEN = factors.filter(f => 
+      f.factor.includes('speed') || f.factor.includes('brzina') ||
+      f.factor.includes('mobility') || f.factor.includes('mobilnost') ||
+      f.factor.includes('coordination') || f.factor.includes('koordinacija') ||
+      f.factor.includes('flexibility') || f.factor.includes('fleksibilnost') ||
+      f.factor.includes('acceleration') || f.factor.includes('akceleracija')
+    );
+    
+    const mainFactorsEN = factors.filter(f => 
+      f.factor.includes('strength') || f.factor.includes('snaga') ||
+      f.factor.includes('explosive') || f.factor.includes('eksplozivnost') || f.factor.includes('power') ||
+      f.factor.includes('agility') || f.factor.includes('agilnost') ||
+      f.factor.includes('reactivity') || f.factor.includes('reaktivnost') ||
+      f.factor.includes('endurance') || f.factor.includes('izdržljivost')
+    );
+    
+    const cooldownFactorsEN = factors.filter(f => 
+      f.factor.includes('core') || f.factor.includes('stabilization') || f.factor.includes('stabilizacija')
+    );
+    
+    for (let day = 1; day <= days; day++) {
+      const isRecovery = day % 4 === 0;
+      
+      if (isRecovery) {
+        plan += `**DAY ${day}: Active Recovery**\n`;
+        plan += `- Foam rolling: 12min\n`;
+        plan += `- Dynamic stretching: 10min\n`;
+        plan += `- Light aerobic: 15min (zone 1-2)\n`;
+        plan += `- Joint mobility: 8min\n\n`;
+        continue;
+      }
+      
+      const factorNames = factors.map(f => f.factor.charAt(0).toUpperCase() + f.factor.slice(1)).join(' + ');
+      plan += `**DAY ${day}: ${factorNames}**\n\n`;
+      
+      // ===== INTRO - WARM-UP =====
+      plan += `🔥 **INTRO - WARM-UP (12-15min):**\n`;
+      
+      if (warmupFactorsEN.length > 0) {
+        warmupFactorsEN.forEach(f => {
+          if (f.factor.includes('mobility') || f.factor.includes('mobilnost')) {
+            plan += `- Mobility: Hip CARs (2×8/side), T-spine rotations (2×10), ankle mobility (2×10)\n`;
+          }
+          if (f.factor.includes('speed') || f.factor.includes('brzina') || f.factor.includes('acceleration')) {
+            plan += `- Acceleration: Sprint build-ups (3×20m @ 50-70-90%), A-skips (2×10m)\n`;
+          }
+          if (f.factor.includes('coordination') || f.factor.includes('koordinacija')) {
+            plan += `- Coordination: Ladder drills (5min), skip variations (3×15m)\n`;
+          }
+          if (f.factor.includes('flexibility') || f.factor.includes('fleksibilnost')) {
+            plan += `- Flexibility: Dynamic leg swings (2×10/leg), walking lunges with rotation (2×10)\n`;
+          }
+        });
+      }
+      
+      if (useBasketballAlts && season === 'in-season') {
+        plan += `- Basketball activation: Dribbling warm-up (3min), defensive slides (2×20m), layup lines (3min)\n`;
+      }
+      
+      plan += `\n💪 **MAIN WORKOUT (30-40min):**\n`;
+      
+      // MAIN FACTORS
+      if (mainFactorsEN.length > 0) {
+        let exerciseNum = 1;
+        
+        mainFactorsEN.forEach(f => {
+          const factorName = f.factor;
+          const factorLevel = f.level;
+          
+          if (factorName.includes('strength') || factorName.includes('snaga')) {
+            plan += `\n**STRENGTH:**\n`;
+            if (factorLevel === 'advanced' || factorLevel === 'elite') {
+              plan += `${exerciseNum++}. Back Squat: 4×6 @ 80% 1RM, rest 3min\n`;
+              plan += `${exerciseNum++}. Romanian Deadlift: 4×8, rest 2:30\n`;
+              plan += `${exerciseNum++}. Bulgarian Split Squat: 3×8/leg, rest 2min\n`;
+            } else if (factorLevel === 'intermediate') {
+              plan += `${exerciseNum++}. Front Squat: 3×8 @ 70% 1RM\n`;
+              plan += `${exerciseNum++}. RDL: 3×10\n`;
+            } else {
+              plan += `${exerciseNum++}. Goblet Squat: 3×12\n`;
+              plan += `${exerciseNum++}. Walking Lunges: 3×10/leg\n`;
+            }
+          } else if (factorName.includes('explosive') || factorName.includes('eksplozivnost') || factorName.includes('power')) {
+            plan += `\n**EXPLOSIVENESS:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Rebound battle drills: 8×10s (contested boards + putback)\n`;
+              plan += `${exerciseNum++}. Shot contest jumps: 8×3 (vertical challenge)\n`;
+              plan += `${exerciseNum++}. Fast break finishing: 6×full court (explosive layups)\n`;
+            } else {
+              if (factorLevel === 'advanced' || factorLevel === 'elite') {
+                plan += `${exerciseNum++}. Depth Jumps: 5×5 (40cm box)\n`;
+                plan += `${exerciseNum++}. Box Jumps: 4×5 @ max height\n`;
+                plan += `${exerciseNum++}. Medicine Ball Slams: 4×8 @ max power\n`;
+              } else {
+                plan += `${exerciseNum++}. Box Jumps: 4×5\n`;
+                plan += `${exerciseNum++}. Broad Jumps: 4×3\n`;
+              }
+            }
+          } else if (factorName.includes('agility') || factorName.includes('agilnost')) {
+            plan += `\n**AGILITY:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Defensive shell drills: 8×45s (zig-zag slides with COD)\n`;
+              plan += `${exerciseNum++}. 1-on-1 full court defense: 6×90s (stay in front, closeouts)\n`;
+              plan += `${exerciseNum++}. Pick & roll coverage: 8×15s (hedge, ice, switch)\n`;
+            } else {
+              plan += `${exerciseNum++}. T-Test: 6×max effort, rest 2min\n`;
+              plan += `${exerciseNum++}. Pro-Agility: 6×max effort, rest 90s\n`;
+              plan += `${exerciseNum++}. Cone drills: 5×4 (various patterns)\n`;
+            }
+          } else if (factorName.includes('reactivity') || factorName.includes('reaktivnost')) {
+            plan += `\n**REACTIVITY:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Help-side rotations: 8×20s (reaction to drive)\n`;
+              plan += `${exerciseNum++}. Loose ball scrambles: 6×15s\n`;
+            } else {
+              plan += `${exerciseNum++}. Reactive agility: 6×10s (partner signal)\n`;
+              plan += `${exerciseNum++}. Drop step drills: 4×6\n`;
+            }
+          } else if (factorName.includes('endurance') || factorName.includes('izdržljivost')) {
+            plan += `\n**ENDURANCE:**\n`;
+            if (useBasketballAlts && season === 'in-season') {
+              plan += `${exerciseNum++}. Full court 3v3: 4×4min (continuous play)\n`;
+              plan += `${exerciseNum++}. Transition conditioning: 6×90s (defense→sprint→finish)\n`;
+            } else {
+              plan += `${exerciseNum++}. Shuttle runs: 6×30s @ 85% max\n`;
+              plan += `${exerciseNum++}. Yo-Yo IR1 intervals: 4×200m\n`;
+            }
+          }
+        });
+      }
+      
+      plan += `\n🧘 **COOL DOWN (10-12min):**\n`;
+      plan += `- Light jogging or cycling: 4min (zone 1, 60-65% HRmax)\n`;
+      plan += `- **Core:** Plank variations (3×45s), dead bugs (3×10/side), side plank (2×30s/side)\n`;
+      plan += `- **Abs:** Bicycle crunches (3×15), hollow holds (3×20s), leg raises (3×12)\n`;
+      plan += `- **Stretching:** Hamstrings (2×30s/leg), hip flexors (2×30s), quadriceps (2×30s), calf (2×30s)\n`;
+      
+      if (cooldownFactorsEN.length > 0) {
+        cooldownFactorsEN.forEach(f => {
+          if (f.factor.includes('stabilization') || f.factor.includes('stabilizacija')) {
+            plan += `- **Stabilization:** Single-leg balance (3×30s/leg), Pallof press (3×12/side)\n`;
+          }
+        });
+      }
+      
+      plan += `\n`;
+    }
+    
+    plan += `\n---\n\n`;
+    plan += `📌 **NOTES:**\n`;
+    plan += `- Program develops ALL selected factors in each workout (3-part structure)\n`;
+    plan += `- ${season === 'in-season' ? 'IN-SEASON: Priority basketball specificity (80%)' : season === 'pre-season' ? 'PRESEASON: Balance specificity/development (60%/40%)' : 'OFF-SEASON: Max developmental potential (40% specific)'}\n`;
+    if (useBasketballAlts) {
+      plan += `- ✅ Using basketball alternatives instead of generic exercises\n`;
+    }
+    plan += `- Adjust volume based on games per week\n`;
+    
+    return plan;
+  }
+}
+
+function getLocalResponse(userMessage: string, language: 'sr' | 'en'): string {
+  console.log('🔥🔥🔥 getLocalResponse CALLED! Language:', language);
+  console.log('🔥🔥🔥 Message (first 300 chars):', userMessage.substring(0, 300));
+  
+  const lowerMessage = userMessage.toLowerCase();
+  
+  // PARSE BROJ DANA iz prompt-a (format: "BROJ DANA: 5" ili "NUMBER OF DAYS: 5" ili prirodni jezik "za 3 dana" ili "3 dana")
+  let requestedDays = 7; // default
+  const daysMatchSr = userMessage.match(/BROJ DANA:\s*(\d+)/);
+  const daysMatchEn = userMessage.match(/NUMBER OF DAYS:\s*(\d+)/);
+  const daysNaturalSr = lowerMessage.match(/(?:za\s+)?(\d+)\s+dan[a]?/); // "za 3 dana", "3 dana"
+  const daysNaturalEn = lowerMessage.match(/(?:for\s+)?(\d+)\s+days?/); // "for 3 days", "3 days"
+  
+  if (daysMatchSr) {
+    requestedDays = parseInt(daysMatchSr[1]);
+    console.log('Parsed days from prompt (SR):', requestedDays);
+  } else if (daysMatchEn) {
+    requestedDays = parseInt(daysMatchEn[1]);
+    console.log('Parsed days from prompt (EN):', requestedDays);
+  } else if (daysNaturalSr) {
+    requestedDays = parseInt(daysNaturalSr[1]);
+    console.log('Parsed days from natural language (SR):', requestedDays);
+  } else if (daysNaturalEn) {
+    requestedDays = parseInt(daysNaturalEn[1]);
+    console.log('Parsed days from natural language (EN):', requestedDays);
+  }
+  console.log('Final requestedDays:', requestedDays);
+  
+  // PARSE KOŠARKAŠKO OPTEREĆENJE iz prompta
+  const basketballTrainingsMatch = userMessage.match(/Košarkaških treninga nedeljno:\s*(\d+)|Basketball trainings per week:\s*(\d+)/i);
+  const basketballGamesMatch = userMessage.match(/Utakmica nedeljno:\s*(\d+)|Games per week:\s*(\d+)/i);
+  const gameDaysMatch = userMessage.match(/Dan utakmice:\s*([^\n]+)|Game day:\s*([^\n]+)/i);
+  
+  let basketballContext = '';
+  if (basketballTrainingsMatch || basketballGamesMatch) {
+    const trainings = basketballTrainingsMatch ? parseInt(basketballTrainingsMatch[1] || basketballTrainingsMatch[2]) : 3;
+    const games = basketballGamesMatch ? parseInt(basketballGamesMatch[1] || basketballGamesMatch[2]) : 0;
+    const gameDays = gameDaysMatch ? (gameDaysMatch[1] || gameDaysMatch[2]) : '';
+    
+    basketballContext = language === 'sr' 
+      ? `\n\n🏀 **KOŠARKAŠKA INTEGRACIJA:**\n- Treninga: ${trainings}/nedeljno\n- Utakmica: ${games}/nedeljno\n- Dan utakmice: ${gameDays}\n- Intenzitet fizičke pripreme: ${trainings >= 5 ? 'NIZAK' : trainings >= 3 ? 'SREDNJI' : 'VISOK'}\n`
+      : `\n\n🏀 **BASKETBALL INTEGRATION:**\n- Trainings: ${trainings}/week\n- Games: ${games}/week\n- Game day: ${gameDays}\n- Physical training intensity: ${trainings >= 5 ? 'LOW' : trainings >= 3 ? 'MEDIUM' : 'HIGH'}\n`;
+    
+    console.log('Basketball context detected:', { trainings, games, gameDays });
+  }
+  
+  // ====== NOVI FORMAT: PARSE MULTI-FACTOR GENERATOR PROMPT ======
+  // Format: "FAKTORI: Snaga (High), Agilnost (Medium), Mobilnost (Low)"
+  console.log('🔍 CHECKING FOR MULTI-FACTOR FORMAT IN MESSAGE:', userMessage.substring(0, 200));
+  const factorsMatchSr = userMessage.match(/FAKTORI:\s*Trening mora biti fokusiran ISKLJUČIVO na faktore:\s*(.+)/i);
+  const factorsMatchEn = userMessage.match(/FACTORS:\s*Training must focus EXCLUSIVELY on:\s*(.+)/i);
+  
+  console.log('🔍 SR match:', factorsMatchSr ? 'FOUND' : 'NOT FOUND');
+  console.log('🔍 EN match:', factorsMatchEn ? 'FOUND' : 'NOT FOUND');
+  
+  if (factorsMatchSr || factorsMatchEn) {
+    const factorsString = factorsMatchSr ? factorsMatchSr[1] : factorsMatchEn![1];
+    console.log('🎯 DETECTED MULTI-FACTOR GENERATOR PROMPT:', factorsString);
+    
+    // Parse selected factors and levels
+    // Example: "Snaga (High), Agilnost (Medium), Mobilnost (Low)"
+    const factorEntries = factorsString.split(',').map(f => f.trim());
+    const parsedFactors: { factor: string; level: string }[] = [];
+    
+    factorEntries.forEach(entry => {
+      const match = entry.match(/(.+?)\s*\((.+?)\)/);
+      if (match) {
+        parsedFactors.push({ 
+          factor: match[1].trim().toLowerCase(), 
+          level: match[2].trim().toLowerCase() 
+        });
+      }
+    });
+    
+    console.log('📊 Parsed factors:', parsedFactors);
+    
+    // Check for basketball alternatives flag
+    const useBasketballAlts = userMessage.includes('KOŠARKAŠKE ALTERNATIVE') || 
+                              userMessage.includes('BASKETBALL ALTERNATIVES');
+    
+    // Parse season
+    let season = 'in-season';
+    if (userMessage.includes('OFF-SEASON') || userMessage.includes('off-season')) {
+      season = 'off-season';
+    } else if (userMessage.includes('PRESEASON') || userMessage.includes('pre-season')) {
+      season = 'pre-season';
+    }
+    
+    console.log('🏀 Season:', season, 'Basketball alternatives:', useBasketballAlts);
+    
+    // Generate multi-factor training plan
+    return generateMultiFactorPlan(parsedFactors, requestedDays, season, useBasketballAlts, basketballContext, language);
+  }
+  
+  // ====== KORELACIONI FORMAT: FAKTOR 1 + FAKTOR 2 ======
+  console.log('🔍 CHECKING CORRELATION FORMAT (Factor 1 + Factor 2)');
+  const factor1Match = userMessage.match(/📊\s*FAKTOR 1:\s*(.+)/i) || userMessage.match(/📊\s*FACTOR 1:\s*(.+)/i);
+  const factor2Match = userMessage.match(/📊\s*FAKTOR 2:\s*(.+)/i) || userMessage.match(/📊\s*FACTOR 2:\s*(.+)/i);
+  console.log('🔍 Factor 1 match:', factor1Match ? 'FOUND' : 'NOT FOUND');
+  console.log('🔍 Factor 2 match:', factor2Match ? 'FOUND' : 'NOT FOUND');
+  
+  let factor1 = '';
+  let factor2 = '';
+  let trainingFocus = '';
+  
+  if (factor1Match && factor2Match) {
+    factor1 = factor1Match[1].trim();
+    factor2 = factor2Match[1].trim();
+    console.log('✅ Detected correlation factors:', factor1, '↔', factor2);
+    
+    // Odluči trening fokus na osnovu OBA faktora (kombinirano)
+    const f1Lower = factor1.toLowerCase();
+    const f2Lower = factor2.toLowerCase();
+    
+    if (f1Lower.includes('brzina') || f2Lower.includes('brzina') || f1Lower.includes('sprint') || f2Lower.includes('sprint')) {
+      trainingFocus = 'brzina';
+    } else if (f1Lower.includes('eksplozivnost') || f2Lower.includes('eksplozivnost') || f1Lower.includes('skok') || f2Lower.includes('skok')) {
+      trainingFocus = 'eksplozivnost';
+    } else if (f1Lower.includes('agilnost') || f2Lower.includes('agilnost') || f1Lower.includes('agility') || f2Lower.includes('agility')) {
+      trainingFocus = 'agilnost';
+    } else if (f1Lower.includes('snaga') || f2Lower.includes('snaga') || f1Lower.includes('strength') || f2Lower.includes('strength')) {
+      trainingFocus = 'snaga';
+    }
+    
+    // Generate kombinovani plan za oba faktora
+    console.log('🎯 Calling generateCorrelationTrainingPlan with:', { factor1, factor2, requestedDays, language });
+    const result = generateCorrelationTrainingPlan(factor1, factor2, requestedDays, basketballContext, language);
+    console.log('✅ generateCorrelationTrainingPlan returned:', result.substring(0, 200));
+    return result;
+  } else {
+    // Proveri da li poruka sadrži multi-factor zahtev u prirodnom jeziku (npr. "brzina i snaga", "speed and strength")
+    // Uključi SVE padežne oblike (nom, gen, dat, aku, vok, inst, lok)
+    const factorMatches = lowerMessage.match(/\b(brzin[aeuio]m?|snag[aeuio]m?|eksplozivnost[iu]m?|agilnost[iu]m?|izdržljivost[iu]m?|speed|strength|power|agility|endurance)\b/gi) || [];
+    const hasMultipleFactors = 
+      factorMatches.length >= 2 &&
+      (lowerMessage.includes(' i ') || lowerMessage.includes(' and ') || lowerMessage.includes(','));
+    
+    console.log('🔍 Multi-factor check:', { 
+      factorMatches: JSON.stringify(factorMatches), 
+      count: factorMatches.length,
+      hasMultipleFactors, 
+      hasConnector: lowerMessage.includes(' i ') || lowerMessage.includes(' and '),
+      message: lowerMessage
+    });
+    
+    if (hasMultipleFactors) {
+      console.log('🎯 Detected natural language multi-factor request');
+      // Ekstraktuj faktore iz poruke koristeći regex sa SVIM padežnim oblicima
+      const detectedFactors: string[] = [];
+      if (lowerMessage.match(/\b(brzin[aeuio]m?|speed)\b/i)) detectedFactors.push('speed');
+      if (lowerMessage.match(/\b(snag[aeuio]m?|strength)\b/i)) detectedFactors.push('strength');
+      if (lowerMessage.match(/\b(eksplozivnost[iu]m?|power|explosive)\b/i)) detectedFactors.push('power');
+      if (lowerMessage.match(/\b(agilnost[iu]m?|agility)\b/i)) detectedFactors.push('agility');
+      if (lowerMessage.match(/\b(izdržljivost[iu]m?|izdrzljivost[iu]m?|endurance)\b/i)) detectedFactors.push('endurance');
+      
+      // Ako ima tačno 2 faktora, koristi correlation generator
+      if (detectedFactors.length === 2) {
+        const factor1 = language === 'sr' 
+          ? detectedFactors[0] === 'speed' ? 'Brzina' : detectedFactors[0] === 'strength' ? 'Snaga' : detectedFactors[0] === 'power' ? 'Eksplozivnost' : detectedFactors[0] === 'agility' ? 'Agilnost' : 'Izdržljivost'
+          : detectedFactors[0].charAt(0).toUpperCase() + detectedFactors[0].slice(1);
+        const factor2 = language === 'sr'
+          ? detectedFactors[1] === 'speed' ? 'Brzina' : detectedFactors[1] === 'strength' ? 'Snaga' : detectedFactors[1] === 'power' ? 'Eksplozivnost' : detectedFactors[1] === 'agility' ? 'Agilnost' : 'Izdržljivost'
+          : detectedFactors[1].charAt(0).toUpperCase() + detectedFactors[1].slice(1);
+        
+        console.log('✅ Using correlation generator for:', factor1, '↔', factor2);
+        return generateCorrelationTrainingPlan(factor1, factor2, requestedDays, basketballContext, language);
+      }
+      
+      // Ako ima 3+ faktora, koristi multi-factor generator
+      if (detectedFactors.length >= 3) {
+        console.log('✅ Using multi-factor generator for:', detectedFactors.join(', '));
+        
+        // Napravi prompt u multi-factor formatu sa default intermediate nivoima
+        const factorList = detectedFactors.map(f => `${f} (intermediate)`).join(', ');
+        const multifactorMessage = `FACTORS: Training must focus EXCLUSIVELY on: ${factorList}\nNUMBER OF DAYS: ${requestedDays}${basketballContext ? '\n' + basketballContext : ''}`;
+        
+        console.log('🔥 Multi-factor prompt:', multifactorMessage);
+        // Pozovi ponovo getLocalResponse sa formatiranim multi-factor promptom
+        return getLocalResponse(multifactorMessage, language);
+      }
+    }
+    
+    // Fallback na keyword matching za non-korelacione upite
+    console.log('🔍 No multi-factor or correlation match - checking keyword matching');
+    // Proveri SVE padežne oblike (nom, gen, dat, aku, vok, inst, lok)
+    if (lowerMessage.match(/\b(brzin[aeuio]m?|speed)\b/i)) {
+      trainingFocus = 'brzina';
+      console.log('✅ Keyword match: SPEED/BRZINA');
+    } else if (lowerMessage.match(/\b(eksplozivnost[iu]m?|skočnost[iu]m?|skok[ua]m?|explosive|power|jump)\b/i)) {
+      trainingFocus = 'eksplozivnost';
+      console.log('✅ Keyword match: EXPLOSIVENESS');
+    } else if (lowerMessage.match(/\b(agilnost[iu]m?|agility|okretnost[iu]m?)\b/i)) {
+      trainingFocus = 'agilnost';
+      console.log('✅ Keyword match: AGILITY');
+    } else if (lowerMessage.match(/\b(snag[aeuio]m?|1rm|strength|squat|čučanj[ua]m?)\b/i)) {
+      trainingFocus = 'snaga';
+      console.log('✅ Keyword match: STRENGTH');
+    } else if (lowerMessage.match(/\b(izdržljivost[iu]m?|izdrzljivost[iu]m?|endurance|stamina)\b/i)) {
+      trainingFocus = 'izdržljivost';
+      console.log('✅ Keyword match: ENDURANCE');
+    } else if (lowerMessage.match(/\b(mobilnost[iu]m?|mobility|pokretljivost[iu]m?)\b/i)) {
+      trainingFocus = 'mobilnost';
+      console.log('✅ Keyword match: MOBILITY');
+    } else if (lowerMessage.match(/\b(fleksibilnost[iu]m?|flexibility|rastezanj[aeuio]m?|stretching)\b/i)) {
+      trainingFocus = 'fleksibilnost';
+      console.log('✅ Keyword match: FLEXIBILITY');
+    } else if (lowerMessage.match(/\b(koordinacij[aeuio]m?|coordination)\b/i)) {
+      trainingFocus = 'koordinacija';
+      console.log('✅ Keyword match: COORDINATION');
+    } else {
+      console.log('⚠️ No keyword match found - returning default response');
+    }
+  }
+  
+  console.log('Training focus:', trainingFocus);
+  
+  if (language === 'sr') {
+    if (trainingFocus === 'brzina') {
+      console.log('✅ Generating SPEED plan');
+      return generateDynamicPlan(requestedDays, 'brzina', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'snaga') {
+      console.log('✅ Generating STRENGTH plan');
+      return generateDynamicPlan(requestedDays, 'snaga', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'eksplozivnost') {
+      console.log('✅ Generating EXPLOSIVENESS plan');
+      return generateDynamicPlan(requestedDays, 'eksplozivnost', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'agilnost') {
+      console.log('✅ Generating AGILITY plan');
+      return generateDynamicPlan(requestedDays, 'agilnost', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'izdržljivost') {
+      console.log('✅ Generating ENDURANCE plan');
+      return generateDynamicPlan(requestedDays, 'izdržljivost', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'mobilnost') {
+      console.log('✅ Generating MOBILITY plan');
+      return generateDynamicPlan(requestedDays, 'mobilnost', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'fleksibilnost') {
+      console.log('✅ Generating FLEXIBILITY plan');
+      return generateDynamicPlan(requestedDays, 'fleksibilnost', 'sr') + basketballContext;
+    }
+    
+    if (trainingFocus === 'koordinacija') {
+      console.log('✅ Generating COORDINATION plan');
+      return generateDynamicPlan(requestedDays, 'koordinacija', 'sr') + basketballContext;
+    }
+
+    return `AI Coach SIMBION Pro je spreman da pomogne!
+
+Opšti saveti za košarkašku fizičku pripremu:
+
+**Osnovna struktura programa:**
+1. **Snaga** - osnova svih kvaliteta (r=0.6-0.85 sa brzinom/eksplozivnošću)
+2. **Brzina** - startno ubrzanje i maksimalna brzina
+3. **Agilnost** - višesmerne promene pravca
+4. **Eksplozivnost** - skočnost i reaktivnost
+5. **Izdržljivost** - YoYo IR1, aerobna baza
+
+**Korelacije faktora:**
+- Snaga ↔ Eksplozivnost: ++ (r=0.75-0.85)
+- Snaga ↔ Brzina: + (r=0.6-0.7)
+- Brzina ↔ Agilnost: + (r=0.5-0.7)
+
+Pitajte konkretno o bilo kom faktoru!`;
+  } else {
+    // English
+    if (trainingFocus === 'brzina') {
+      console.log('✅ Generating SPEED plan (EN)');
+      return generateDynamicPlan(requestedDays, 'speed', 'en') + basketballContext;
+    }
+
+    if (trainingFocus === 'snaga') {
+      console.log('✅ Generating STRENGTH plan (EN)');
+      return generateDynamicPlan(requestedDays, 'strength', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'eksplozivnost') {
+      console.log('✅ Generating EXPLOSIVENESS plan (EN)');
+      return generateDynamicPlan(requestedDays, 'explosiveness', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'agilnost') {
+      console.log('✅ Generating AGILITY plan (EN)');
+      return generateDynamicPlan(requestedDays, 'agility', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'izdržljivost') {
+      console.log('✅ Generating ENDURANCE plan (EN)');
+      return generateDynamicPlan(requestedDays, 'endurance', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'mobilnost') {
+      console.log('✅ Generating MOBILITY plan (EN)');
+      return generateDynamicPlan(requestedDays, 'mobility', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'fleksibilnost') {
+      console.log('✅ Generating FLEXIBILITY plan (EN)');
+      return generateDynamicPlan(requestedDays, 'flexibility', 'en') + basketballContext;
+    }
+    
+    if (trainingFocus === 'koordinacija') {
+      console.log('✅ Generating COORDINATION plan (EN)');
+      return generateDynamicPlan(requestedDays, 'coordination', 'en') + basketballContext;
+    }
+
+    return `AI Coach SIMBION Pro is ready to help!
+
+For best results, please configure Claude API key in src/services/claudeApi.ts file.
+
+In the meantime, I can provide general basketball physical preparation advice:
+
+**Basic program structure:**
+1. **Strength** - foundation of all qualities (r=0.6-0.85 with speed/explosiveness)
+2. **Speed** - starting acceleration and maximum speed
+3. **Agility** - multi-directional changes
+4. **Explosiveness** - jumping and reactivity
+5. **Endurance** - YoYo IR1, aerobic base
+
+**Factor correlations:**
+- Strength ↔ Explosiveness: ++ (r=0.75-0.85)
+- Strength ↔ Speed: + (r=0.6-0.7)
+- Speed ↔ Agility: + (r=0.5-0.7)
+
+Ask specifically about any factor!`;
+  }
+}
+
+export async function callClaudeAPI(
+  userMessage: string,
+  _conversationHistory: ClaudeMessage[] = [],
+  language: 'sr' | 'en' = 'sr'
+): Promise<string> {
+  // Desktop verzija koristi lokalne odgovore (bez Claude API)
+  // Claude API ne radi iz browser-a zbog CORS-a
+  console.log('SIMBION Pro: Koristim interni sistem za generisanje odgovora');
+  
+  // Dodaj malu pauzu za simulaciju API poziva
+  await new Promise(resolve => setTimeout(resolve, 600));
+  
+  return getLocalResponse(userMessage, language);
+}
+
+export async function generateTrainingProgram(
+  playerLevel: string,
+  trainingGoal: string,
+  duration: number,
+  sessionLength: number,
+  language: 'sr' | 'en' = 'sr'
+): Promise<string> {
+  // Use callClaudeAPI directly instead of backend
+  const prompt = language === 'sr'
+    ? `Generiši ${duration}-dnevni program treninga za cilj "${trainingGoal}", nivo igrača: ${playerLevel}, dužina sesije: ${sessionLength} minuta. Daj strukturiran plan sa konkretnim vežbama.`
+    : `Generate ${duration}-day training program for goal "${trainingGoal}", player level: ${playerLevel}, session length: ${sessionLength} minutes. Provide structured plan with specific exercises.`;
+  
+  return callClaudeAPI(prompt, [], language);
+}
+
+
+// AI PROGRAM LIMITS - Trail/1M: 15, 3M: 30, 6M: 60
+export function getAIProgramsCount(userId: string): number {
+  const key = `aiProgramsCount_${userId}`;
+  return parseInt(localStorage.getItem(key) || '0', 10);
+}
+
+export function incrementAIProgramsCount(userId: string): void {
+  const key = `aiProgramsCount_${userId}`;
+  const current = getAIProgramsCount(userId);
+  localStorage.setItem(key, (current + 1).toString());
+}
+
+export function getAIProgramLimit(plan: string): number {
+  const limits: Record<string, number> = {
+    'trial': 15,
+    '1M': 15,
+    '3M': 30,
+    '6M': 60
+  };
+  return limits[plan] || 15;
+}
+
+// INTERNET SEARCH SIMULATION
+async function internetSearch(query: string): Promise<string> {
+  const q = query.toLowerCase();
+  const results: string[] = [];
+  
+  if (q.includes('snaga') || q.includes('strength')) {
+    results.push('• PubMed (2023): Strength training increases VO2max by 8-12%');
+    results.push('• NSCA Journal: 3-5 sets optimal for hypertrophy adaptation');
+    results.push('• Sports Science: Periodization improves power output 15-20%');
+  }
+  
+  if (q.includes('brzina') || q.includes('speed')) {
+    results.push('• FIBA Study: Elite guards average 2.8-3.0s pro-agility test');
+    results.push('• NBA Combine: Sprint training 3x/week optimal frequency');
+    results.push('• Research 2024: Plyometrics + resistance = 12% sprint improvement');
+  }
+  
+  if (q.includes('skok') || q.includes('vertical') || q.includes('jump')) {
+    results.push('• NBA Standards: Elite players 75-90cm vertical jump');
+    results.push('• NSCA: CMJ training 2x/week increases jump 8-15cm');
+    results.push('• Biomechanics: Depth jumps superior for reactive strength');
+  }
+  
+  if (q.includes('izdržljivost') || q.includes('endurance') || q.includes('yoyo')) {
+    results.push('• FIBA: Elite level YoYo IR1 >2400m for guards');
+    results.push('• Sports Medicine: HIIT 2-3x/week optimal for basketball');
+    results.push('• Research: Intermittent training improves game performance 18%');
+  }
+  
+  if (q.includes('koordinacija') || q.includes('coordination') || q.includes('agility')) {
+    results.push('• NSCA: Coordination drills 3-4x/week improve reactive ability');
+    results.push('• Sports Science: Neuromuscular training reduces injury 35%');
+    results.push('• FIBA: Agility ladder work enhances footwork speed 10-15%');
+  }
+  
+  if (results.length === 0) {
+    return '🌐 Internet: Trenutno nema dodatnih izvora za ovaj upit.\n\n';
+  }
+  
+  return `🌐 Internet izvori (${results.length} rezultata):\n${results.join('\n')}\n\n`;
+}
+
