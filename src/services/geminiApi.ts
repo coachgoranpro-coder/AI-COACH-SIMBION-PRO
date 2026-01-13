@@ -1,3 +1,5 @@
+
+
 // Google Gemini API Service for AI Coach SIMBION Pro
 // Using Gemini 1.5 Flash - FREE tier with 1500 requests/day
 
@@ -8,13 +10,9 @@ interface GeminiMessage {
   parts: string;
 }
 
-// Initialize Gemini with API key
-const GEMINI_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || "AIzaSyAhfra9XRpi8Y2uSmOgqqejHkXwAnurpfw";
-let genAI: GoogleGenerativeAI | null = null;
-
-if (GEMINI_API_KEY) {
-  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-}
+// Initialize Gemini with API key - HARDCODED for deployment
+const GEMINI_API_KEY = "AIzaSyAhfra9XRpi8Y2uSmOgqqejHkXwAnurpfw";
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 /**
  * Main function to call Gemini API with automatic retry on rate limit
@@ -30,10 +28,6 @@ export async function callGeminiAPI(
   retryCount: number = 0
 ): Promise<string> {
   try {
-    if (!genAI) {
-      return getFallbackResponse(language);
-    }
-
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // Build conversation context
