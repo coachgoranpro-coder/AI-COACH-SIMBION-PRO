@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Bot, Send, Loader, User, Sparkles, Play, Info } from 'lucide-react';
-import { callGeminiAPI as callClaudeAPI, generateTrainingProgram } from '../services/geminiApi';
+import { callGeminiAPI, generateTrainingProgram } from '../services/geminiApi';
 import { getRelevantPrinciples, formatPrinciplesForPrompt } from '../data/trainingKnowledgeBase';
 import { logActivity } from '../services/analyticsService';
 import { auth } from '../lib/firebase';
@@ -215,7 +215,7 @@ export default function AISimbionChat({ language = 'sr', correlationContext }: A
     setIsLoading(true);
 
     try {
-      const response = await callClaudeAPI(messageToSend, [], language);
+      const response = await callGeminiAPI(messageToSend, [], language);
       
       // Log activity - Check if response came from agent or database
       const user = auth.currentUser;
@@ -414,7 +414,7 @@ ${correlationContext.explanation}
       
       try {
         // Call Claude API directly (like DiagnosticsModule does)
-        const response = await callClaudeAPI(contextMessage, [], language);
+        const response = await callGeminiAPI(contextMessage, [], language);
         
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
@@ -639,7 +639,7 @@ ${correlationContext.explanation}
         ? `Ti si AI SIMBION - ekspert za fizičku pripremu košarkaša.\n\n${knowledgeContext}\n\n${seasonContext}${basketballAlternativesText}\n\n⚠️ KRITIČNO - OBAVEZNO PROČITAJ:\n- FAKTORI: Trening mora biti fokusiran ISKLJUČIVO na faktore: ${factorsList}\n- NE SMEŠ dodavati faktore koji nisu navedeni (npr. ako nema BRZINE, NE ubacuj sprint vežbe!)\n- SEZONA: ${seasonGen} - poštuj procenat specifičnosti (${seasonGen === 'in-season' ? '80%' : seasonGen === 'pre-season' ? '60%' : '40%'} košarkaško)\n- PRINCIPI: Primeni principe iz knjige "Fizička priprema košarkaša" (gore)\n- "Player must be capable to do" - svaka vežba mora imati direktnu primenu u igri\n- Disanje (Zakon #1): Uvek naglasiti pravilno disanje, posebno kod snage\n- Propriocepcija (Zakon #2): 15-20min pre treninga + istezanje posle\n${useBasketballAlternativesGen ? '- KOŠARKAŠKE ALTERNATIVE: OBAVEZNO koristi SAMO vežbe iz tabele gore! ZABRANJEN genericke vežbe!\n' : ''}\nPARAMETRI:\n- Dana treninga: ${trainingDaysGen}\n- Košarkaški treninzi/nedelju: ${basketballTrainingsGen}\n- Utakmice/nedelju: ${basketballGamesGen}\n\nZADATAK:\nKreiraj ${trainingDaysGen}-dnevni trening program koji razvija SAMO NAVEDENE FAKTORE prema njihovim nivoima. Koristi principe iz NBA, NSCA, FIBA i knjige Coach Goran.\n\n📋 STRUKTURA:\n1. **DAN 1-${trainingDaysGen}**: Za svaki dan napiši:\n   - Fokus dana (MORA biti iz navedenih faktora!)\n   - Proprioceptivno zagrevanje (15min)\n   - 4-6 vežbi sa setovima/ponavljanjima/pauzama\n   - Napomene o disanju i intenzitetu\n   - Istezanje i oporavak (10min)\n   \n2. **VOLUMEN**: Prilagodi prema broju utakmica (${basketballGamesGen}/nedelju) - ekipa mora biti podjednako jaka u oba poluvremena\n\n3. **SPECIFIČNOST**: ${seasonGen === 'in-season' ? '80% vežbi sa loptom' : seasonGen === 'pre-season' ? '60% vežbi sa loptom' : '40% vežbi sa loptom'}\n\n4. **INDIVIDUALIZACIJA**: Navedi opcije za različite pozicije (bek/krilo/centar)\n\nGeneriši plan:`
         : `You are AI SIMBION - basketball physical preparation expert.\n\n${knowledgeContext}\n\n${seasonContext}${basketballAlternativesText}\n\n⚠️ CRITICAL - MANDATORY INSTRUCTIONS:\n- FACTORS: Training must focus EXCLUSIVELY on: ${factorsList}\n- DO NOT add factors not listed (e.g., if SPEED is not listed, DO NOT include sprint exercises!)\n- SEASON: ${seasonGen} - respect specificity percentage (${seasonGen === 'in-season' ? '80%' : seasonGen === 'pre-season' ? '60%' : '40%'} basketball-specific)\n- PRINCIPLES: Apply principles from "Basketball Physical Preparation" book (above)\n- "Player must be capable to do" - every exercise must have direct game application\n- Breathing (Law #1): Always emphasize proper breathing, especially in strength work\n- Proprioception (Law #2): 15-20min before training + stretching after\n${useBasketballAlternativesGen ? '- BASKETBALL ALTERNATIVES: MANDATORY - use ONLY exercises from table above! FORBIDDEN generic exercises!\n' : ''}\nPARAMETERS:\n- Training Days: ${trainingDaysGen}\n- Basketball trainings/week: ${basketballTrainingsGen}\n- Games/week: ${basketballGamesGen}\n\nTASK:\nCreate a ${trainingDaysGen}-day training program that develops ONLY THE LISTED FACTORS according to their levels. Use principles from NBA, NSCA, FIBA and Coach Goran's book.\n\n📋 STRUCTURE:\n1. **DAY 1-${trainingDaysGen}**: For each day write:\n   - Day focus (MUST be from listed factors!)\n   - Proprioceptive warm-up (15min)\n   - 4-6 exercises with sets/reps/rest\n   - Notes on breathing and intensity\n   - Stretching and recovery (10min)\n   \n2. **VOLUME**: Adjust for ${basketballGamesGen} games/week - team must be equally strong in both halves\n\n3. **SPECIFICITY**: ${seasonGen === 'in-season' ? '80% ball exercises' : seasonGen === 'pre-season' ? '60% ball exercises' : '40% ball exercises'}\n\n4. **INDIVIDUALIZATION**: Include options for different positions (guard/forward/center)\n\nGenerate plan:`;
 
-      const response = await callClaudeAPI(prompt, [], language);
+      const response = await callGeminiAPI(prompt, [], language);
       setTrainingProgramGen(response);
     } catch (error) {
       console.error('Error generating training:', error);

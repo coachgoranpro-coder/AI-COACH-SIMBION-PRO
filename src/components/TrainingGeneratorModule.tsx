@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play, Info, User, Zap, Clock, Target } from 'lucide-react';
-import { callGeminiAPI as callClaudeAPI } from '../services/geminiApi';
+import { callGeminiAPI } from '../services/geminiApi';
 import { workoutTemplates, type CompleteWorkout } from '../data/workoutTemplates';
 import { POSITION_STANDARDS, type PositionStandards } from '../data/coachGoranMethodology';
 import type { BasketballPosition } from '../data/exerciseCatalog';
@@ -289,7 +289,7 @@ ${useBasketballAlternatives ? '⚠️ CRITICAL: Use ONLY basketball alternatives
 
 Generate plan:`;
 
-      const response = await callClaudeAPI(prompt, [], language);
+      const response = await callGeminiAPI(prompt, [], language);
       setTrainingProgram(response);
     } catch (error) {
       console.error('Error generating training:', error);

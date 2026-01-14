@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { callGeminiAPI as callClaudeAPI } from '../services/geminiApi';
+import { callGeminiAPI } from '../services/geminiApi';
 import { logActivity } from '../services/analyticsService';
 import { auth } from '../lib/firebase';
 
@@ -778,7 +778,7 @@ ${useBasketballAlternatives ? '- MANDATORY: Use BASKETBALL ALTERNATIVES from tab
 - Red flags: [when rest/deload]
 - Correlation advice: [how to balance positive/negative correlations]`;
 
-      const response = await callClaudeAPI(prompt, [], language);
+      const response = await callGeminiAPI(prompt, [], language);
       
       // Log activity
       const user = auth.currentUser;
