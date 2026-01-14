@@ -235,13 +235,12 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Testirajte i analizirajte 16 faktora performansi
 
 **💪 TRENING GENERATOR**
-→ 295 vežbi iz FPK metodologije
+→ 408 vežbi u bazi
 → Automatski kreiran program baziran na dijagnostici
 → Offline rad garantovan!
 
 **📚 RESOURCES**
 → Correlation Matrix (2396 povezanih faktora)
-→ FPK metodologija
 
 ---
 💡 **Za AI personalizaciju:** Postavite GOOGLE_API_KEY (besplatno na https://aistudio.google.com/app/apikey)
@@ -255,13 +254,12 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Test and analyze 16 performance factors
 
 **💪 TRAINING GENERATOR**
-→ 295 exercises from FPK methodology
+→ 408 exercises in database
 → Auto-generated program based on diagnostics
 → Offline operation guaranteed!
 
 **📚 RESOURCES**
 → Correlation Matrix (2396 factor connections)
-→ FPK methodology
 
 ---
 💡 **For AI personalization:** Set GOOGLE_API_KEY (free at https://aistudio.google.com/app/apikey)

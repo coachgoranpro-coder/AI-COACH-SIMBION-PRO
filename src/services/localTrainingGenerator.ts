@@ -212,8 +212,8 @@ export function generateLocalTrainingProgram(
     mainPart,
     cooldown,
     notes: {
-      sr: `🏀 SIMBION LOCAL GENERATOR\n\nProgram kreiran na osnovu:\n• ${exercises.length} vežbi iz FPK kataloga\n• Analiza dijagnostike i slabosti\n• Pozicija: ${playerProfile.position}\n• Nivo: ${level}\n\n💡 Fokus: ${focusAreas.join(', ')}\n\n⚠️ Napomena: Ovo je automatski generisan program. Za personalizaciju koristite online Gemini AI generator.`,
-      en: `🏀 SIMBION LOCAL GENERATOR\n\nProgram created based on:\n• ${exercises.length} exercises from FPK catalog\n• Diagnostic analysis and weaknesses\n• Position: ${playerProfile.position}\n• Level: ${level}\n\n💡 Focus: ${focusAreas.join(', ')}\n\n⚠️ Note: This is an auto-generated program. For personalization use online Gemini AI generator.`
+      sr: `🏀 SIMBION LOCAL GENERATOR\n\nProgram kreiran na osnovu:\n• ${exercises.length} vežbi u bazi\n• Analiza dijagnostike i slabosti\n• Pozicija: ${playerProfile.position}\n• Nivo: ${level}\n\n💡 Fokus: ${focusAreas.join(', ')}\n\n⚠️ Napomena: Ovo je automatski generisan program. Za personalizaciju koristite online Gemini AI generator.`,
+      en: `🏀 SIMBION LOCAL GENERATOR\n\nProgram created based on:\n• ${exercises.length} exercises in database\n• Diagnostic analysis and weaknesses\n• Position: ${playerProfile.position}\n• Level: ${level}\n\n💡 Focus: ${focusAreas.join(', ')}\n\n⚠️ Note: This is an auto-generated program. For personalization use online Gemini AI generator.`
     }
   };
 }
