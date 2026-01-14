@@ -93,7 +93,7 @@ export async function generateTrainingProgram(
   if (genAI) {
     try {
       const systemPrompt = language === 'sr' 
-    ? `Ti si SIMBION - AI trener za fizičku pripremu košarkaša, baziran na Coach Goran metodologiji.
+    ? `Ti si SIMBION - AI trener za fizičku pripremu košarkaša.
 
 TVOJA ULOGA:
 - Analiziraš dijagnostiku igrača (testove, slabosti, jake strane)
@@ -101,7 +101,7 @@ TVOJA ULOGA:
 - Vodiš računa o poziconiranju (PG, SG, SF, PF, C)
 - Optimizuješ treninge prema specifičnostima košarke
 
-METODOLOGIJA (Coach Goran FPK):
+METODOLOGIJA:
 1. UVOD (15-20 min):
    - Temperatura tela (5-7 min cardio)
    - Mobilnost zglobova
@@ -128,7 +128,7 @@ PARAMETRI TRENINGA:
 - Target tests (CMJ, Sprint, Squat, itd.)
 
 Generiši detaljan program baziran na dijagnostici.`
-    : `You are SIMBION - AI Basketball Physical Conditioning Coach, based on Coach Goran methodology.
+    : `You are SIMBION - AI Basketball Physical Conditioning Coach.
 
 YOUR ROLE:
 - Analyze player diagnostics (tests, weaknesses, strengths)
@@ -136,7 +136,7 @@ YOUR ROLE:
 - Account for position specifics (PG, SG, SF, PF, C)
 - Optimize training for basketball specificity
 
-METHODOLOGY (Coach Goran FPK):
+METHODOLOGY:
 1. WARM-UP (15-20 min):
    - Body temperature (5-7 min cardio)
    - Joint mobility
@@ -235,7 +235,7 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Testirajte i analizirajte 16 faktora performansi
 
 **💪 TRENING GENERATOR**
-→ 205 vežbi iz Coach Goran metodologije
+→ 295 vežbi iz FPK metodologije
 → Automatski kreiran program baziran na dijagnostici
 → Offline rad garantovan!
 
@@ -255,7 +255,7 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Test and analyze 16 performance factors
 
 **💪 TRAINING GENERATOR**
-→ 205 exercises from Coach Goran methodology
+→ 295 exercises from FPK methodology
 → Auto-generated program based on diagnostics
 → Offline operation guaranteed!
 
