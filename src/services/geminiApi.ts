@@ -227,7 +227,7 @@ function parseTrainingProgram(response: string): any {
  */
 function getFallbackResponse(language: 'sr' | 'en'): string {
   return language === 'sr'
-    ? `🏀 **SIMBION OFFLINE MOD - 408 Vežbi Dostupno**
+    ? `🏀 **SIMBION OFFLINE MOD - 205 Vežbi Dostupno**
 
 🔄 Gemini AI trenutno nije dostupan, ali možete koristiti:
 
@@ -235,7 +235,7 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Testirajte i analizirajte 16 faktora performansi
 
 **💪 TRENING GENERATOR**
-→ 408 vežbi u bazi
+→ 205 vežbi u bazi
 → Automatski kreiran program baziran na dijagnostici
 → Offline rad garantovan!
 
@@ -246,7 +246,7 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 💡 **Za AI personalizaciju:** Postavite GOOGLE_API_KEY (besplatno na https://aistudio.google.com/app/apikey)
 
 📧 **Pitanja?** Koristite Dijagnostiku → Generator treninga za instant program!`
-    : `🏀 **SIMBION OFFLINE MODE - 408 Exercises Available**
+    : `🏀 **SIMBION OFFLINE MODE - 205 Exercises Available**
 
 🔄 Gemini AI currently unavailable, but you can use:
 
@@ -254,7 +254,7 @@ function getFallbackResponse(language: 'sr' | 'en'): string {
 → Test and analyze 16 performance factors
 
 **💪 TRAINING GENERATOR**
-→ 408 exercises in database
+→ 205 exercises in database
 → Auto-generated program based on diagnostics
 → Offline operation guaranteed!
 
