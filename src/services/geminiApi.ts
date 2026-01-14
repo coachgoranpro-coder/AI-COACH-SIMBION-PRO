@@ -223,48 +223,30 @@ function parseTrainingProgram(response: string): any {
 }
 
 /**
- * Fallback response when API is not available - provides useful basketball training info
+ * Fallback response - simple help message
  */
 function getFallbackResponse(language: 'sr' | 'en'): string {
   return language === 'sr'
-    ? `🏀 **SIMBION OFFLINE MOD - 205 Vežbi Dostupno**
+    ? `Zdravo! Ja sam SIMBION - vaš AI trener za fizičku pripremu košarkaša.
 
-🔄 Gemini AI trenutno nije dostupan, ali možete koristiti:
+Mogu da vam pomognem sa:
 
-**📊 DIJAGNOSTIKA** 
-→ Testirajte i analizirajte 16 faktora performansi
+📊 **DIJAGNOSTIKA** - Analiza performansi i testova
+💪 **TRENING PROGRAMI** - Personalizovani mikro i makro ciklusi  
+📈 **CORRELATION MATRIX** - Povezanost faktora
+📚 **METODOLOGIJA** - Principi treninga baziranog na nauci
 
-**💪 TRENING GENERATOR**
-→ 205 vežbi u bazi
-→ Automatski kreiran program baziran na dijagnostici
-→ Offline rad garantovan!
+Kako mogu da vam pomognem danas?`
+    : `Hello! I'm SIMBION - your AI basketball physical conditioning coach.
 
-**📚 RESOURCES**
-→ Correlation Matrix (2396 povezanih faktora)
+I can help you with:
 
----
-💡 **Za AI personalizaciju:** Postavite GOOGLE_API_KEY (besplatno na https://aistudio.google.com/app/apikey)
+📊 **DIAGNOSTICS** - Performance analysis and testing
+💪 **TRAINING PROGRAMS** - Personalized micro and macro cycles
+📈 **CORRELATION MATRIX** - Factor connections
+📚 **METHODOLOGY** - Science-based training principles
 
-📧 **Pitanja?** Koristite Dijagnostiku → Generator treninga za instant program!`
-    : `🏀 **SIMBION OFFLINE MODE - 205 Exercises Available**
-
-🔄 Gemini AI currently unavailable, but you can use:
-
-**📊 DIAGNOSTICS**
-→ Test and analyze 16 performance factors
-
-**💪 TRAINING GENERATOR**
-→ 205 exercises in database
-→ Auto-generated program based on diagnostics
-→ Offline operation guaranteed!
-
-**📚 RESOURCES**
-→ Correlation Matrix (2396 factor connections)
-
----
-💡 **For AI personalization:** Set GOOGLE_API_KEY (free at https://aistudio.google.com/app/apikey)
-
-📧 **Questions?** Use Diagnostics → Training Generator for instant program!`;
+How can I help you today?`;
 }
 
 export default callGeminiAPI;
