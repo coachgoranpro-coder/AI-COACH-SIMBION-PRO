@@ -3,6 +3,7 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GOOGLE_API_KEY } from "../config/apiKeys";
+import { generateLocalTrainingProgram, formatLocalTrainingProgram } from "./localTrainingGenerator";
 
 interface GeminiMessage {
   role: 'user' | 'model';
@@ -10,7 +11,14 @@ interface GeminiMessage {
 }
 
 // Initialize Gemini with API key from config (bypass Vite env replacement)
-const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+let genAI: GoogleGenerativeAI | null = null;
+try {
+  if (GOOGLE_API_KEY && GOOGLE_API_KEY.length > 10) {
+    genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+  }
+} catch (error) {
+  console.warn("Gemini initialization failed, will use local generator");
+}
 
 /**
  * Main function to call Gemini API with automatic retry on rate limit
@@ -25,6 +33,12 @@ export async function callGeminiAPI(
   language: 'sr' | 'en' = 'sr',
   retryCount: number = 0
 ): Promise<string> {
+  // If Gemini is not available, fallback immediately
+  if (!genAI) {
+    console.log("🔄 Using LOCAL training generator (Gemini unavailable)");
+    return getFallbackResponse(language);
+  }
+
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -67,7 +81,7 @@ export async function callGeminiAPI(
 }
 
 /**
- * Generate training program using Gemini
+ * Generate training program using Gemini AI or local fallback
  */
 export async function generateTrainingProgram(
   diagnosticData: any,
@@ -75,7 +89,10 @@ export async function generateTrainingProgram(
   language: 'sr' | 'en' = 'sr'
 ): Promise<any> {
   
-  const systemPrompt = language === 'sr' 
+  // TRY GEMINI FIRST
+  if (genAI) {
+    try {
+      const systemPrompt = language === 'sr' 
     ? `Ti si SIMBION - AI trener za fizičku pripremu košarkaša, baziran na Coach Goran metodologiji.
 
 TVOJA ULOGA:
@@ -162,13 +179,34 @@ Kreiraj personalizovani trening program sa:
 5. Progresija za naredne nedelje
 `;
 
-  const response = await callGeminiAPI(userPrompt, [
-    { role: 'model', parts: systemPrompt }
-  ], language);
+      const response = await callGeminiAPI(userPrompt, [
+        { role: 'model', parts: systemPrompt }
+      ], language);
+
+      return {
+        analysis: response,
+        program: parseTrainingProgram(response),
+        generator: 'gemini'
+      };
+    } catch (error) {
+      console.warn("Gemini API failed, falling back to local generator:", error);
+    }
+  }
+
+  // FALLBACK TO LOCAL GENERATOR
+  console.log("🔄 Using LOCAL training generator (Gemini unavailable)");
+  const localProgram = generateLocalTrainingProgram(diagnosticData, playerProfile, language);
+  const formattedProgram = formatLocalTrainingProgram(localProgram, language);
 
   return {
-    analysis: response,
-    program: parseTrainingProgram(response)
+    analysis: formattedProgram,
+    program: {
+      type: 'local_generated',
+      content: formattedProgram,
+      metadata: localProgram.metadata,
+      timestamp: new Date().toISOString()
+    },
+    generator: 'local'
   };
 }
 
@@ -185,20 +223,50 @@ function parseTrainingProgram(response: string): any {
 }
 
 /**
- * Fallback response when API is not available
+ * Fallback response when API is not available - provides useful basketball training info
  */
 function getFallbackResponse(language: 'sr' | 'en'): string {
   return language === 'sr'
-    ? `⚠️ Gemini API nije dostupan. Molimo postavite VITE_GOOGLE_API_KEY u .env fajlu.
+    ? `🏀 **SIMBION OFFLINE MOD - 205 Vežbi Dostupno**
 
-Za besplatni API key: https://aistudio.google.com/app/apikey
+🔄 Gemini AI trenutno nije dostupan, ali možete koristiti:
 
-Gemini 2.5 Flash je BESPLATNO sa 1500 requests/day!`
-    : `⚠️ Gemini API is not available. Please set VITE_GOOGLE_API_KEY in .env file.
+**📊 DIJAGNOSTIKA** 
+→ Testirajte i analizirajte 16 faktora performansi
 
-For free API key: https://aistudio.google.com/app/apikey
+**💪 TRENING GENERATOR**
+→ 205 vežbi iz Coach Goran metodologije
+→ Automatski kreiran program baziran na dijagnostici
+→ Offline rad garantovan!
 
-Gemini 2.5 Flash is FREE with 1500 requests/day!`;
+**📚 RESOURCES**
+→ Correlation Matrix (2396 povezanih faktora)
+→ FPK metodologija
+
+---
+💡 **Za AI personalizaciju:** Postavite GOOGLE_API_KEY (besplatno na https://aistudio.google.com/app/apikey)
+
+📧 **Pitanja?** Koristite Dijagnostiku → Generator treninga za instant program!`
+    : `🏀 **SIMBION OFFLINE MODE - 205 Exercises Available**
+
+🔄 Gemini AI currently unavailable, but you can use:
+
+**📊 DIAGNOSTICS**
+→ Test and analyze 16 performance factors
+
+**💪 TRAINING GENERATOR**
+→ 205 exercises from Coach Goran methodology
+→ Auto-generated program based on diagnostics
+→ Offline operation guaranteed!
+
+**📚 RESOURCES**
+→ Correlation Matrix (2396 factor connections)
+→ FPK methodology
+
+---
+💡 **For AI personalization:** Set GOOGLE_API_KEY (free at https://aistudio.google.com/app/apikey)
+
+📧 **Questions?** Use Diagnostics → Training Generator for instant program!`;
 }
 
 export default callGeminiAPI;
